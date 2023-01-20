@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "Roles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section contentTitle{
+    <div class="bg-title">
+        <p class="title-page">Roles</p>
+    </div>
+}
+
+@section contentBody
+    {
+    <link href="~/Content/dataTables/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <script src="~/Content/dataTables/js/jquery.dataTables.js"></script>
+    <script src="~/Content/sicv1/js/formatDate.js"></script>
+
+    @Html.Partial("_DataTableReferences")
+
+    <div id="div_modal_roles"></div>
+    <section class="table-scroll">
+        <table class="table table-striped table-bordered table-hover display compact" id="tbl_roles">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Estado</th>
+                    <th></th>
+                </tr>
+
+            </thead>
+            <tbody></tbody>
+        </table>
+    </section>
+    <script src="~/Content/sicv1/js/Role/list.js"></script>
+    <script src="~/Content/sicv1/js/Role/edit.js"></script>
+}

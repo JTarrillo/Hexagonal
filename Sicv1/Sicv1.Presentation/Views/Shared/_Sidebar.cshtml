@@ -1,0 +1,43 @@
+﻿<div class='Rectangle-19'>
+    <div class='Frame-17'>
+        <h3 class="sic-text">SIC</h3> 
+        <span class="user-view">v.1.0.12</span>        
+        <div class="avatar">
+            <div class="Frame-1">   
+                <img class="picture-profile" src="https://c.tenor.com/ir2nX96xSJUAAAAC/ghosts-my-profile.gif" alt="">
+                <span class="text-profile">
+                    @if (Session["user"] != null)
+                    {
+                        User user = (User)Session["user"];
+                        @user.FULLNAME
+                    }
+                </span>
+            </div>
+        </div>               
+    </div>
+</div>
+
+@foreach (var mnus in Model)
+{
+    <li>
+        <a href="@Url.Action(mnus.ACTION, mnus.CONTROLLER)" data-location="/@mnus.CONTROLLER/@mnus.ACTION" class="@mnus.CLASS_AHREF"><i class="@mnus.CLASS_I"></i>@mnus.NAME</a>
+    </li>
+}
+
+<li id="li_salir">
+    <a href="@Url.Action("Logout","Account")" class="waves-effect"><i class="fas ifas fa-power-off"></i>Cerrar sesión</a>
+</li>
+
+<script defer>
+    $(function () {       
+        var url = window.location.pathname;
+        //console.log(url);
+        $('.menu a').each(function () {
+            var res = $(this).attr("data-location")
+            if (res == url) {
+                $(this).addClass('active');
+                $(this).children().addClass('text-white');
+            }
+        })
+    });
+</script>

@@ -1,0 +1,57 @@
+.btnCustom {
+    margin-left: 30% !important
+}
+
+.customModal {
+    transition-delay: .5s;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 1050;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    width: 100% !important;
+    height: 100% !important;
+    outline: 0;
+    background-color: rgba(0, 0, 0, .8) !important
+}
+
+.txt {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-size: 12px !important
+}
+
+.customTitleModal {
+    margin-left: 5% !important
+}
+
+.starModal {
+    border-bottom: 0 solid #e9ecef
+}
+
+.customBtn {
+    background-color: #0093b3 !important;
+    margin-left: 15% !important
+}
+
+.paginate_button.current {
+    background: var(--blueGrad);
+    color: var(--white)
+}
+
+.modal-content {
+    border-radius: 1rem;
+    border: none;
+    /* box-shadow: var(--shadowModal) */
+}
+
+.dataTables_info {
+    font-size: .8rem;
+    color: var(--gray)
+}
+
+.table-responsive {
+    display: inline-table !important;
+    width: 100% !important
+}

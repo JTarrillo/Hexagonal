@@ -1,0 +1,97 @@
+﻿@model Oncosaludv1.Presentation.Models.CompanyViewModel
+
+<div class="customModal" id="mdl-edit-company">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Editar</h5>
+				<button type="button" id="btn-x" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				@Html.AntiForgeryToken()
+				<input type="hidden" id="hdStatusOriginalImageCompany" value="" />
+				<input type="hidden" id="hdcompanyIdEditCompany" value="@Model.CompanyId" />
+				<input type="hidden" id="hdimgBase64EditCompany" />
+				<div class="ant-form-group">
+					<span>Nombre de alianza:</span>
+					<input class="input" type="text" id="txtNombreEditCompany" value="@Model.Nombre" />
+				</div>
+
+				<div class="ant-form-group">
+					<span>¿Participa LifeMiles? </span>
+					<br />
+					<span>No</span>
+					<input type="radio" class="text-center" value="0" @(Model.LIFEMILES_PARTICIPATES_CAMPAIGN < 0 ? "checked" : "") data-value="0" name="optParticipateLifeMilesEdit" id="chkNoParticipateLifesMilesEdit">
+					&nbsp;<span>Si</span>
+					<input type="radio" class="text-center" value="1" @(Model.LIFEMILES_PARTICIPATES_CAMPAIGN < 0 ? "" : "checked") data-value="1" name="optParticipateLifeMilesEdit" id="chkSiParticipateLifesMilesEdit">
+				</div>
+				<br />
+				<div class="box-image h200p margin-b">
+					<label class="absolute margin btn btn-upload" for="iflogoEditCompany">
+						<svg class="margin-r" width="20" height="20" viewBox="0 0 98.5 108.615">
+							<g id="Grupo_16" data-name="Grupo 16" transform="translate(-703 -357.879)">
+								<g id="Grupo_15" data-name="Grupo 15" transform="translate(-8)">
+									<line id="Línea_6" data-name="Línea 6" y1="80" transform="translate(760 360)" fill="none" stroke="#fff" stroke-linecap="round" stroke-width="3" />
+									<line id="Línea_7" data-name="Línea 7" x1="22" y1="22" transform="translate(760 360)" fill="none" stroke="#fff" stroke-linecap="round" stroke-width="3" />
+									<line id="Línea_8" data-name="Línea 8" y1="22" x2="22" transform="translate(738 360)" fill="none" stroke="#fff" stroke-linecap="round" stroke-width="3" />
+								</g>
+								<path id="Trazado_32" data-name="Trazado 32" d="M786.833,675.667V712s.795,13.454,12.68,13.667,69.338,0,69.338,0,13.482-1.333,13.482-13.667V676.5" transform="translate(-82.333 -260.761)" fill="none" stroke="#fff" stroke-linecap="round" stroke-width="3" />
+							</g>
+						</svg>
+						Seleccione imagen
+					</label>
+					<img class="image contain" src="@Model.Logo" id="objImgEditCompany" />
+				</div>
+				<input class="hidden" type="file" id="iflogoEditCompany" accept="image/jpeg, image/png" />
+				<div class="row">
+					<div class="ant-form-group col-6">
+						<span>Número de ruc:</span>
+						<input class="input" type="text" id="txtRucEditCompany" value="@Model.Ruc" maxlength="11" />
+					</div>
+					<div class="ant-form-group col-6">
+						<span>Teléfono:</span>
+						<input type="text" class="input" id="txtTelefEditCompany" value="@Model.Telefono" maxlength="9" />
+					</div>
+				</div>
+				<div class="ant-form-group">
+					<span>Url de fan page de facebook:</span>
+					<input class="input" type="text" id="txtUrlRedSocialEditCompany" value="@Model.Url" />
+				</div>
+				<div class="ant-form-group">
+					<span>Estado</span>&nbsp;
+					<select class="input" id="cboEstado">
+						<option value="True" @(Model.Status ? "selected" : "")>Activo</option>
+						<option value="False" @(Model.Status ? "" : "selected")>Inactivo</option>
+					</select>
+				</div>
+				<div class="row">
+					<div class='ant-form-group col-6'>
+						<span>latitud:</span>
+						<input class='input' type='text' id='txtLatitude' value="@Model.Latitude" />
+					</div>
+					<div class='ant-form-group col-6'>
+						<span>Longitud:</span>
+						<input class='input' type='text' id='txtLongitude' value="@Model.Longitude" />
+					</div>
+					<div class='ant-form-group col-12'>
+						<span>Ciudad:</span>
+						<select class="input" id="cboCountry">
+												 
+						</select>						
+					</div>
+					<div class='ant-form-group col-12'>
+						<span>Dirección:</span>
+						<input class='input' type='text' id='txtDirection' value="@Model.Direction" />
+					</div>
+				</div>
+				<div id="divAlertEditCompany" class="ant-message"></div>
+			</div>
+			<div class="modal-footer">				
+				<button type="button" id="btn-close" class="btn btn-pink" data-dismiss="modal">Cerrar</button>
+				<button type="button" id="btnActualizar" class="btn btn-blue">Actualizar</button>
+			</div>
+		</div>
+	</div>
+</div>

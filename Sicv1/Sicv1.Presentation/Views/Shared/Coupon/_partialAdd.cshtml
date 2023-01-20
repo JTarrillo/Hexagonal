@@ -1,0 +1,548 @@
+﻿<div class="customModal" id="AddCouponModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span>Agregar cupón</span>
+            </div>
+            <div class="modal-body">
+                @Html.AntiForgeryToken()
+                <div class="column">
+                    <p class="text-blue f-10">Segmentos que pueden visualizar este cupón</p>
+                    <div class="box-filter-coupon">
+                        <div class="same">
+                            <p>Súper Ultra</p>
+                            <div class="item">
+                                <input type="checkbox" class="text-center" data-id="1" name="optCardEdit" id="chk1" value="false">
+                            </div>
+                        </div>
+                        <div class="same">
+                            <p>Ultra</p>
+                            <div class="item">
+                                <input type="checkbox" class="text-center" data-id="2" name="optCardEdit" id="chk2" value="false">
+                                <input type="hidden" class="text-center" name="idCouponHidden" id="idCouponHidden">
+                            </div>
+                        </div>
+                        <div class="same">
+                            <p>Zafiro</p>
+                            <div class="item">
+                                <input type="checkbox" class="text-center" data-id="3" name="optCardEdit" id="chk3" value="false">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-filter-coupon">
+                        <div class="same">
+                            <p>Rubí</p>
+                            <div class="item">
+                                <input type="checkbox" class="text-center" data-id="4" name="optCardEdit" id="chk4" value="false">
+                            </div>
+                        </div>
+                        <div class="same">
+                            <p>Selecto</p>
+                            <div class="item">
+                                <input type="checkbox" class="text-center" data-id="5" name="optCardEdit" id="chk5" value="false">
+                            </div>
+                        </div>
+                        <div class="same">
+                            <p>Externo</p>
+                            <div class="item">
+                                <input type="checkbox" class="text-center" data-id="6" name="optCardEdit" id="chk6" value="false">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ant-form-group">
+                        <span>Tipo</span>
+                        <select id="cboCouponTypeAdd" class="input">
+                            <option value="-1">[Seleccione]</option>
+                            <option value="CUPON">Cupón</option>
+                            <option value="AGENDAR">Agendamiento</option>
+                            <option value="LLAMADA">Llamada</option>
+                            <option value="URL">URL</option>
+                        </select>
+                    </div>
+                </div>
+                @* START YUKIDS io-row*@
+                <div class="column">
+                    <div class="row section-link d-none">
+                        <div class="col-12 ant-form-group">
+                            <span class="ant-form-group">URL:</span>
+                            <input class='input' type='text' id='urlLink' autocomplete="off" />
+                        </div>
+                    </div>
+                    <div class="row section-qr">
+                        <div class="col-12 ant-form-group">
+                            <span>Mostrar imagen del código QR/Barras:</span>
+                            <select id="cboShowImage" style="width: 80px" class=" input margin-b">
+                                <option value="0">NO</option>
+                                <option value="1">SI</option>
+                            </select>
+                        </div>
+                        <div class="col-4 ant-form-group">
+                            <span>Formato:</span>
+                            <select id="cboBarcodeFormat" class="input margin-b" onchange="onChangeIndex(this)">
+                                <option value="-1">Seleccione uno</option>
+                                <option value="qr">CÓDIGO QR</option>
+                                <option value="code128">CÓDIGO BARRAS - CODE 128</option>
+                                <option value="itf">CÓDIGO BARRAS - ITF</option>
+                                <option value="code39">CÓDIGO BARRAS - CODE39</option>
+                            </select>
+                        </div>
+                        <div class="col-3 ant-form-group dvTpeStatic" style="display: none">
+                            <span>Tipo:</span>
+                            <select id="cboTypeStatic" class="input margin-b cboTypeStatic" onchange="selecteTypeIndex(this)">
+                                <option value="static">Estático</option>
+                                <option value="dynamic">Dinámico</option>
+                            </select>
+                        </div>
+                        <div class="col-3 ant-form-group dvTxtBarcode" style="display: none">
+                            <span>Código:</span>
+                            <input class="input" type="text" name="barcodeX" id="barcodeX" value="" style="margin-bottom: 0; justify-content: center;" />
+                        </div>
+                        <div class="col-2 ant-form-group dvButtonView" id="dvButtonView" style="display: none">
+                            <span>&nbsp;</span>
+                            <input class="dt-button" type="button" value="Ver" style="margin-bottom: 0" onclick="genetareCode()" />
+                        </div>
+                        <div class="col-12 ant-form-group dvBarcodeRender" id="dvBarcodeRender" style="display: none; justify-content: center;">
+                            <svg id="barcodeAdd"></svg>
+                        </div>
+                        <div class="col-12 ant-form-group dvQRRender" id="dvQRRender" style="display: none">
+                        </div>
+                    </div>
+                </div>
+                @* END YUKIDS *@
+                <div class="io-divider horizontal"></div>
+                <div class="box-coupon-edit">
+                    <p class="text-blue f-10">¿Seleccione a qué alianza pertenece este cupón?</p>
+                    <select class="input margin-b" id="cbo-lstCatAdd"></select>
+
+                    @*<div class="ant-form-group">
+              <span>Tipo</span>
+              <select id="cboCouponTypeAdd" class="input">
+                <option value="-1">[Seleccione]</option>
+                <option value="CUPON">Cupón</option>
+                <option value="AGENDAR">Agendamiento</option>
+                <option value="LLAMADA">Llamada</option>
+              </select>
+            </div>*@
+                </div>
+                @* START YUKIDS *@
+                @*<div class="io-row end">
+          <div class="row">
+            <div class="col-4 ant-form-group">
+              <span>Formato:</span>
+              <select id="cboBarcodeFormat" class="input margin-b" onchange="onChangeIndex(this)">
+                <option value="-1">Seleccione uno</option>
+                <option value="qr">CÓDIGO QR</option>
+                <option value="code128">CÓDIGO BARRAS - CODE 128</option>
+                <option value="itf">CÓDIGO BARRAS - ITF</option>
+                <option value="code39">CÓDIGO BARRAS - CODE39</option>
+              </select>
+            </div>
+            <div class="col-3 ant-form-group dvTpeStatic" style="display: none">
+              <span>Tipo:</span>
+              <select id="cboTypeStatic" class="input margin-b cboTypeStatic" onchange="selecteTypeIndex(this)">
+                <option value="static">Estático</option>
+                <option value="dynamic">Dinámico</option>
+              </select>
+            </div>
+            <div class="col-3 ant-form-group dvTxtBarcode" style="display: none">
+              <span>Código:</span>
+              <input class="input" type="text" name="barcodeX" id="barcodeX" value=""
+                style="margin-bottom: 0; justify-content: center;" />
+            </div>
+            <div class="col-2 ant-form-group dvButtonView" id="dvButtonView" style="display: none">
+              <span>&nbsp;</span>
+              <input class="dt-button" type="button" value="Ver" style="margin-bottom: 0" onclick="genetareCode()" />
+            </div>
+            <div class="col-12 ant-form-group dvBarcodeRender" id="dvBarcodeRender"
+              style="display: none; justify-content: center;">
+              <svg id="barcodeAdd"></svg>
+            </div>
+            <div class="col-12 ant-form-group dvQRRender" id="dvQRRender" style="display: none">
+            </div>
+          </div>
+        </div>*@
+                @* END YUKIDS *@
+                <div class="io-divider horizontal"></div>
+                <div class="box-coupon-edit">
+                    @*<p class="text-blue f-10">¿Seleccione a qué alianza pertenece este cupón?</p>
+            <select class="input margin-b" id="cbo-lstCatAdd"></select>*@
+
+                    @* LIFEMILES *@
+                    <div class='ant-form-group'>
+                        ¿Participa LifeMiles?<br />
+                        No <input type='radio' class='text-center' value='0' checked data-value='0'
+                                  name='optparticipatelifemilesCoupon' id='chkNOparticipatelifesmilesAddCoupon'>
+                        &nbsp;Si <input type='radio' class='text-center' value='1' data-value='1'
+                                        name='optparticipatelifemilesCoupon' id='chkSIparticipatelifesmilesAddCoupon'>
+                    </div>
+                    <br />
+                    <span class="ant-form-group">Número de millas </span>
+                    <input class='input' disabled type='text' id='txtnumeromillasAddCoupon' maxlength='6' />
+                    @* *@
+
+
+                    <div class="row">
+                        <div class="col-6 ant-form-group">
+                            <select class="input" id="cbo-catParents"></select>
+                        </div>
+                        <div class="col-6 ant-form-group">
+                            <select class="input" id="cbo-catsChildByParentIdLevel0"></select>
+                        </div>
+                    </div>
+                    <select class="input w100" id="cbo-catsChildByParentIdLevel1"></select>
+                    <div class="section-image filter-st">
+                        <div class="box-image">
+                            <article class="upload column">
+                                <svg class="padding" width="98.5" height="80" viewBox="0 0 98.5 108.615">
+                                    <g data-name="Grupo 16" transform="translate(-703 -357.879)">
+                                        <g id="Grupo_15" data-name="Grupo 15" transform="translate(-8)">
+                                            <line id="Línea_6" data-name="Línea 6" y1="80" transform="translate(760 360)" fill="none"
+                                                  stroke="#fff" stroke-linecap="round" stroke-width="3" />
+                                            <line id="Línea_7" data-name="Línea 7" x1="22" y1="22" transform="translate(760 360)" fill="none"
+                                                  stroke="#fff" stroke-linecap="round" stroke-width="3" />
+                                            <line id="Línea_8" data-name="Línea 8" y1="22" x2="22" transform="translate(738 360)" fill="none"
+                                                  stroke="#fff" stroke-linecap="round" stroke-width="3" />
+                                        </g>
+                                        <path id="Trazado_32" data-name="Trazado 32"
+                                              d="M786.833,675.667V712s.795,13.454,12.68,13.667,69.338,0,69.338,0,13.482-1.333,13.482-13.667V676.5"
+                                              transform="translate(-82.333 -260.761)" fill="none" stroke="#fff" stroke-linecap="round"
+                                              stroke-width="3" />
+                                    </g>
+                                </svg>
+
+                                <span class="text-white">Seleccione imagen</span>
+                            </article>
+                            <img id="imgModalAdd" class="image" />
+                        </div>
+                        <label class="btn-selected-file absolute column" for="inputFileAdd">
+                            <svg class="padding" width="98.5" height="80" viewBox="0 0 98.5 108.615">
+                                <g data-name="Grupo 16" transform="translate(-703 -357.879)">
+                                    <g id="Grupo_15" data-name="Grupo 15" transform="translate(-8)">
+                                        <line id="Línea_6" data-name="Línea 6" y1="80" transform="translate(760 360)" fill="none"
+                                              stroke="#fff" stroke-linecap="round" stroke-width="3" />
+                                        <line id="Línea_7" data-name="Línea 7" x1="22" y1="22" transform="translate(760 360)" fill="none"
+                                              stroke="#fff" stroke-linecap="round" stroke-width="3" />
+                                        <line id="Línea_8" data-name="Línea 8" y1="22" x2="22" transform="translate(738 360)" fill="none"
+                                              stroke="#fff" stroke-linecap="round" stroke-width="3" />
+                                    </g>
+                                    <path id="Trazado_32" data-name="Trazado 32"
+                                          d="M786.833,675.667V712s.795,13.454,12.68,13.667,69.338,0,69.338,0,13.482-1.333,13.482-13.667V676.5"
+                                          transform="translate(-82.333 -260.761)" fill="none" stroke="#fff" stroke-linecap="round"
+                                          stroke-width="3" />
+                                </g>
+                            </svg>
+
+                            <span class="text-white">Seleccione imagen</span>
+                        </label>
+
+                        <input class="hidden" type="file" id="inputFileAdd" name="inputFileAdd"
+                               onchange="fnRenderImage(this, '#imgModalAdd', '#hdimgBase64Add', null, 1000000);"
+                               accept="image/jpeg, image/png" /><br />
+                        <input class="hidden" type="hidden" id="hdimgBase64Add" name="hdimgBase64Add" value="" />
+                        <input class="hidden" type="hidden" id="hdFileNameAdd" name="hdFileNameAdd" value="" />
+                    </div>
+                    @if (Session["user"] != null)
+                    {
+                        User user = Sicv1.Infrastructure.Cross.Util.MyUser;
+                        <input type="hidden" id="hduserId" value="@user.ID" />
+                        <input type="hidden" id="hdcompanyId" value="@user.ID_COMPANY" />
+                    }
+                    <div class="ant-form-group">
+                        <span>Título</span>
+                        <textarea class="input text-area" placeholder="Ingrese un título" id="txtTitleAdd" name="txtTitleAdd"
+                                  required></textarea>
+                    </div>
+
+                    <div class="ant-form-group">
+                        <span>Descripción</span>
+                        <textarea class="input text-area h100p" placeholder="Ingrese descripción" id="txtDescriptionAdd"
+                                  name="txtDescription" required></textarea>
+                    </div>
+
+                    <input type="hidden" id="hdpriceAdd" value="" />
+                    <input type="hidden" id="hdpercentageAdd" value="" />
+                    <div class="ant-form-group">
+                        <span>Condiciones</span>
+                        <textarea class="input text-area h100p" placeholder="Ingrese condiciones" id="txtConditionsAdd"
+                                  name="txtConditionsAdd" maxlength="10000" required></textarea>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6 ant-form-group">
+                            <span>Seleccione tipo</span>
+                            <div class="box-toggle" id="toggle-status-add">
+                                <span class="item-same item-l"
+                                      onclick="toggleLeft('toggle-status-add','#lblValPorcentPriceAdd','Precio');">Precio</span>
+                                <span class="item-same item-r"
+                                      onclick="toggleRight('toggle-status-add','#lblValPorcentPriceAdd','Porcentaje');">Porcentaje</span>
+                                <div class="toggle-status item-same"></div>
+                            </div>
+                        </div>
+                        <div class="col-6 ant-form-group">
+                            <span id="lblValPorcentPriceAdd"></span>
+                            <input class="input" type="text" id="txtValPorcentPriceAdd" required />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6 ant-form-group">
+                            <span>Fecha inicial:</span>
+                            <input class="input" type="text" id="dtpIniAdd" required>
+                        </div>
+                        <div class="col-6 ant-form-group">
+                            <span>Fecha Final:</span>
+                            <input class="input" type="text" id="dtpFinAdd" required>
+                        </div>
+                    </div>
+                    <div class="row newframeSocialNetwork">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-9">
+                                    <p class="text-blue f-10">Agregar Web o Redes sociales</p>
+                                </div>
+                                <div class="col-3">
+                                    <div class="btn btn-blue" onclick="addNewSocialNetwork()">nuevo</div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+      <div class="modal-footer">
+        <button type="button" id="btn-close-Add" class="btn btn-pink">Cerrar</button>
+        <button type="button" id="btn-save-add" class="btn btn-blue">Grabar</button>
+      </div>
+    </div>
+  </div>
+  <div id="divAlertAdd" class="ant-message"></div>
+</div>
+<script src="~/Content/sicv1/js/Coupon/add.js"></script>
+<script>
+    let cat_url = [];
+  $(function () {
+     
+
+    $("#lblValPorcentPriceAdd").text("Precio");
+    fnvalidateNumberWithDecimals("#txtValPorcentPriceAdd");
+  });
+
+  function fnCheckIfHaveLifeMiles(companyId = null, action = "Add") {
+    var odata = { "CompanyId": companyId }
+    $.ajax({
+      method: "POST",
+      url: "../Company/CheckIfHaveLifeMiles",
+      contentType: "application/json; charset=utf-8",
+      dataType: "json",
+      data: JSON.stringify(odata),
+      success: function (_) {
+        if (action == "Add") {
+          if (parseInt(_._) == -1 || parseInt(_._) == 0) {
+            //No tiene LifeMiles
+            $("#chkNOparticipatelifesmilesAddCoupon").prop("checked", true);
+            $("#chkSIparticipatelifesmilesAddCoupon").prop("checked", false);
+            $("#txtnumeromillasAddCoupon").prop("disabled", true);
+
+            $("#chkNOparticipatelifesmilesAddCoupon").prop("disabled", true);
+            $("#chkSIparticipatelifesmilesAddCoupon").prop("disabled", true);
+            $("#txtnumeromillasAddCoupon").val("");
+            v_optLifeMilesAddCoupon = 0;
+          }
+          else {
+            //tiene LifeMiles
+            $("#chkNOparticipatelifesmilesAddCoupon").prop("disabled", false);
+            $("#chkSIparticipatelifesmilesAddCoupon").prop("disabled", false);
+            v_optLifeMilesAddCoupon = 1;
+          }
+        }
+        else {
+          if (parseInt(_._) == -1 || parseInt(_._) == 0) {
+            $("#chkNOparticipatelifesmilesEditCoupon").prop("checked", true);
+            $("#chkSIparticipatelifesmilesEditCoupon").prop("checked", false);
+            $("#txtnumeromillasEditCoupon").prop("disabled", true);
+            $("#chkNOparticipatelifesmilesEditCoupon").prop("disabled", true);
+            $("#chkSIparticipatelifesmilesEditCoupon").prop("disabled", true);
+            $("#txtnumeromillasEditCoupon").val("");
+            v_optLifeMilesEditCoupon = 0;
+          }
+          else {
+            $("#chkNOparticipatelifesmilesEditCoupon").prop("disabled", false);
+            $("#chkSIparticipatelifesmilesEditCoupon").prop("disabled", false);
+            $("#txtnumeromillasEditCoupon").prop("disabled", true);
+            v_optLifeMilesEditCoupon = 1;
+          }
+        }
+      }
+    });
+    }
+
+    
+
+  
+  function selectTypeUrl(e) {
+    try {
+
+      let content = e.parentNode.parentNode
+      let sltSocial = content.querySelector(".sltSocial")
+      let iptTitle = content.querySelector(".iptTitle")
+      let iptUrl = content.querySelector(".iptUrl")
+
+      let selectedValue = e
+      switch (selectedValue.value) {
+        case "1": {
+          sltSocial.style = "display: grid;"
+          iptTitle.style = "display: none;"
+          iptUrl.style = "display: grid;"
+          break
+        }
+        case "2": {
+          sltSocial.style = "display: none;"
+          iptTitle.style = "display: grid;"
+          iptUrl.style = "display: grid;"
+          break
+        }
+        default: {
+          sltSocial.style = "display: none;"
+          iptTitle.style = "display: none;"
+          iptUrl.style = "display: none;"
+          break
+        }
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  function selecteTypeIndex(control) {
+        var selectedValue = control.value;
+        var dvTxtBarcode = document.querySelector(".dvTxtBarcode")
+        var dvButtonView = document.getElementById("dvButtonView")
+        var barcodeX = document.getElementById("barcodeX")
+        var dvBarcodeRender = document.querySelector(".dvBarcodeRender")
+        var dvQRRender = document.querySelector(".dvQRRender");
+        if (selectedValue === 'static') {
+            dvTxtBarcode.style.display = 'block';
+            dvButtonView.style.display = 'block';
+            //dvBarcodeRender.style.display = 'block';
+        } else {
+            dvBarcodeRender.style.display = 'none';
+            dvTxtBarcode.style.display = 'none';
+            dvButtonView.style.display = 'none';
+            dvQRRender.style.display = 'none'
+            barcodeX.value = "";
+        }
+    }
+  
+
+  function selectOption(elem, id, multi) {
+    let input = elem.querySelector('input');
+    let text_option = elem.querySelector('p');
+    let all = document.querySelectorAll('.io-option');
+    let select = elem.parentNode.parentNode;
+    let span = select.querySelector('.io-select span');
+    let value = '';
+    //multi select
+    if (multi == true) {
+      if (input.checked === false) {
+        elem.classList.add('active');
+        input.checked = true
+      } else {
+        elem.classList.remove('active');
+        input.checked = false
+      }
+    } else {
+      //only select
+      for (const item of all) {
+        item.classList.remove('active');
+        input.checked = false;
+      }
+      elem.classList.add('active');
+      input.checked = true;
+      value = text_option.textContent
+      span.textContent = value
+    }
+  }
+
+  function onChangeIndex(control) {
+    var selectedValue = control.value;
+    var dvTxtBarcode = document.querySelector(".dvTxtBarcode")
+    var dvButtonView = document.getElementById("dvButtonView")
+    var dvTpeStatic = document.querySelector(".dvTpeStatic");
+    var cboTypeStatic = document.querySelector(".cboTypeStatic");
+    var dvBarcodeRender = document.querySelector(".dvBarcodeRender")
+    if (selectedValue === '-1') {
+      dvButtonView.style.display = 'none'
+      dvTpeStatic.style.display = 'none'
+      dvTxtBarcode.style.display = 'none';
+      dvBarcodeRender.style.display = 'none';
+      cboTypeStatic.value = "static";
+      barcodeX.value = "";
+    } else if (selectedValue === 'qr') {
+      dvButtonView.style.display = 'block'
+      dvTpeStatic.style.display = 'block'
+      dvTxtBarcode.style.display = 'block';
+      dvBarcodeRender.style.display = 'none';
+      cboTypeStatic.value = "static";
+    } else {
+      dvButtonView.style.display = 'block'
+      dvTpeStatic.style.display = 'block'
+      dvTxtBarcode.style.display = 'block';
+      dvBarcodeRender.style.display = 'none';
+      cboTypeStatic.value = "static";
+    }
+  }
+
+  function genetareCode() {
+    var e = document.getElementById("cboBarcodeFormat");
+    var selectedValue = e.options[e.selectedIndex].value;
+    var barcodeXValue = document.getElementById("barcodeX").value;
+    var dvBarcodeRender = document.querySelector(".dvBarcodeRender");
+    var dvQRRender = document.querySelector(".dvQRRender");
+    if (barcodeXValue === '') {
+      alert("Debe ingresar un código de cupon");
+    } else {
+      if (selectedValue === '-1') {
+        dvBarcodeRender.style.display = 'none';
+        dvQRRender.style.display = 'none';
+        dvQRRender.innerHTML = '';
+      } else if (selectedValue === 'qr') {
+        dvBarcodeRender.style.display = 'none';
+        dvQRRender.style.display = 'flex'
+        dvQRRender.style.justifyContent = 'center'
+        dvQRRender.innerHTML = '';
+        var miCodigoQR = new QRCode(dvQRRender, {
+          text: barcodeXValue,
+          width: 128,
+          height: 128,
+          colorDark: "#000000",
+          colorLight: "#ffffff",
+          correctLevel: QRCode.CorrectLevel.H
+        });
+        miCodigoQR.clear();
+        miCodigoQR.makeCode(barcodeXValue);
+      } else {
+        dvBarcodeRender.style.display = 'flex';
+        dvBarcodeRender.style.justifyContent = 'center'
+        dvQRRender.style.display = 'none'
+        dvQRRender.innerHTML = '';
+        JsBarcode("#barcodeAdd", barcodeXValue, {
+          format: selectedValue || 'code128',
+          lineColor: "#333",
+          width: 1,
+          height: 50,
+          displayValue: false
+        });
+      }
+    }
+
+
+
+    //let content = document.querySelector('#barcodeAdd');
+    //content.parentNode.style = 'display: flex';
+    }
+    
+</script>
+
+<script src="https://cdn.jsdelivr.net/jsbarcode/3.3.7/JsBarcode.all.min.js"></script>

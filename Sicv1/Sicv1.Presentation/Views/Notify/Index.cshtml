@@ -1,0 +1,290 @@
+﻿@{
+ViewBag.Title = "Index";
+Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section contentTitle{
+<div class="bg-title">
+    <p class="title-page">Envío de Notificaciones</p>
+</div>
+}
+
+@section contentBody{
+<section class="io-notify">
+    <div class="left">
+        <div>
+            <div style="float:left" class="btn-toggle-status box-icon " id="btnChangeType" onclick="onChangeType(this)">
+                <span class="cicle-toggle"></span>
+            </div>
+            <span style="float:left" id="spanText">Envío personalizado</span>
+            <div class="io-divider horizontal"></div>
+            <div class="io-divider horizontal"></div>
+            <div id="scCustom">
+                <input id="txtUserAdd" name="txtUserAdd" class="input"
+                    placeholder="Ingrese número de documento del usuario" />
+                <ul id="lstUsersNotify">
+                </ul>
+            </div>
+            <span>Selecionar segmento</span>
+            <div class="io-divider horizontal"></div>
+            <article class="io-dropdown js-dropdown-segment">
+                <div class="io-select" onclick="this.parentNode.classList.toggle('open')">
+                    <i class="fas fa-dot-circle"></i>
+                    <span>Todos</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="list-option">
+                </div>
+            </article>
+        </div>
+    </div>
+    <div class="io-divider vertical"></div>
+    <div class="right">
+        <span>Título de la notificación</span>
+        <div class="io-divider horizontal"></div>
+        <input id="txtTitle" name="txtTitle" class="input" placeholder="Ingrese título" />
+        <span>Detalle de la notificación</span>
+        <div class="io-divider horizontal"></div>
+        <textarea id="txt_body" rows="10" class="input txtPolicy scroll-md" name="txt_body" placeholder=""
+            maxlength="250"></textarea>
+        <div class="io-divider horizontal"></div>
+        <button id="al-download-lm" class="btn btn-primary active" title="Enviar Mensaje"
+            onclick="send_message();">Enviar Notificacion</button>
+
+    </div>
+    <article class="loading" id="loading"></article>
+    <article class="ant-message" id="div-alert"></article>
+</section>
+
+<script>
+    let arr = []
+    class ui_io {
+
+        listSelect = () => {
+            let content = document.querySelector(".js-dropdown-segment")
+            let listContent = content.querySelector(".list-option")
+            let list = ""
+
+            if (!arr.length) {
+                arr = [
+                    { id: 1, name: "Todos", value: 0, status: true },
+                    { id: 2, name: "Súper Ultra", value: 1, status: true },
+                    { id: 3, name: "Ultra", value: 2, status: true },
+                    { id: 4, name: "Zafiro", value: 3, status: true },
+                    { id: 5, name: "Rubí", value: 4, status: true },
+                    { id: 6, name: "Selecto", value: 5, status: true },
+                    { id: 7, name: "Externo", value: 6, status: true },
+                ]
+            }
+            
+            for (var i = 0; i < arr.length; i++) {
+                const option = `
+                    <div class="io-option ${arr[i].status == true && 'active'}" value="${arr[i].value}" onclick="io.selectOption(this, ${arr[i].id})">
+                        <span></span>
+                        <p>${arr[i].name}</p>
+                    </div>
+                `
+                list += option
+            }
+
+            listContent.innerHTML = list
+        }
+
+        selectOption = (e, id) => {
+            let content = document.querySelector(".js-dropdown-segment")
+            let onlySelect = content.querySelector(".io-select")
+            let newState = []
+            let name = ""
+            if (id == 1) {
+                if (arr[0].status) {
+                    newState = arr.map(obj =>
+                        obj.id !== 0 ? { ...obj, status: false } : obj
+                    );
+                    name = "Seleccione segmento"
+                } else {
+                    const newState = arr.map(obj =>
+                        obj.id !== 0 ? { ...obj, status: true } : obj
+                    );
+                    name = "Todos"
+                }
+                
+            } else {
+                newState = arr.map(obj =>
+                    obj.id === id ? obj.status == true ? { ...obj, status: false } : { ...obj, status: true } : obj
+                );
+                arr = newState
+                
+                if (arr[id - 1].status){
+                    name = arr[id - 1].name + " +"
+                } else {
+                    for (var i = 0; i < arr.length; i++) {
+                        if(arr[i].status){
+                            name = arr[i].name + " +"
+                        }
+                    }
+                }
+            }
+
+            const select = `
+                <i class="fas fa-dot-circle"></i>
+                <span>${name}</span>
+                <i class="fas fa-chevron-down"></i>
+            `
+            onlySelect.innerHTML = select
+            arr = newState
+            this.listSelect()
+        }
+
+
+    }
+    let io = new ui_io()
+
+    document.addEventListener("DOMContentLoaded", (event) => {
+        io.listSelect()
+
+    })
+
+
+
+
+    //document.getElementById("txtUserAdd").addEventListener("keyup", onKeyAdd);
+    var input = document.getElementById("txtUserAdd");
+    let segments = [];
+    var tokens = [];
+    var typeToggle = "custom";
+    input.addEventListener("keyup", function (event) {
+        if (event.keyCode === 13) {
+            if (input.value !== '') {
+                fncreatefeedbackToUser("Buscando documento " + input.value + "...");
+                $("#loading").addClass("flex");
+
+                let dataDocument = { DOCUMENT: input.value, }
+                let xhr = new XMLHttpRequest();
+                xhr.responseType = "json";
+                xhr.onreadystatechange = () => {
+                    $("#loading").removeClass("flex");
+                    if (xhr.readyState == XMLHttpRequest.DONE) {
+                        if (xhr.status == 200) {
+                            let res = xhr.response;
+                            if (res.STATUS) {
+                                input.value = "";
+                                var DataUser = JSON.parse(res.MESSAGE);
+                                var lstUsersNotify = document.getElementById("lstUsersNotify");
+                                fncreateAlert("Usuario " + DataUser.NAME + " " + DataUser.LASTNAME_P + " agregado a la lista", 'success');
+                                tokens.push({ id: DataUser.ID, token: DataUser.TOKEN })
+                                lstUsersNotify.innerHTML += "<li>- " + DataUser.NAME + " " + DataUser.LASTNAME_P + "<span class='btnDeletedItem' onClick='deleteUserfromList(" + DataUser.ID + ", this)'>x</span></li>";
+                            }
+                            else {
+                                fncreateAlert(res.MESSAGE, 'danger');
+                                console.log(res);
+                            }
+                        }
+                        else {
+                            alert("http Preview responde con status " + xhr.status);
+                        }
+                    }
+                };
+                xhr.open("POST", "/Notify/getDatafromDocument");
+                xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+                xhr.send(JSON.stringify(dataDocument));
+
+            } else {
+                fncreateAlert('Ingrese el documento de identidad del usuario.', 'warning');
+            }
+        }
+    });
+
+    function deleteUserfromList(id, domelem) {
+        if (tokens.length === 0) {
+            fncreateAlert("Nada que eliminar", 'danger');
+        } else {
+            if (id === 0) {
+                fncreateAlert("Nada que eliminar", 'danger');
+            } else {
+                domelem.parentNode.remove();
+                tokens = tokens.filter(function (obj) {
+                    return obj.id !== id;
+                });
+            }
+        }
+    }
+
+    function onChangeType(e) {
+        var contentCurrent = document.getElementById("spanText").textContent;
+        document.getElementById("btnChangeType").classList.toggle('btn-toggle-status-on');
+        if (contentCurrent === 'Envío personalizado') {
+            document.getElementById("scCustom").hidden = true;
+            document.getElementById("spanText").innerHTML = "Notificar a todos los usuarios";
+            typeToggle = "all";
+        } else {
+            document.getElementById("scCustom").hidden = false;
+            typeToggle = "custom";
+            document.getElementById("spanText").innerHTML = "Envío personalizado";
+        }
+    }
+
+    function send_message() {
+        segments = [];
+
+        if (typeToggle == 'all') {
+            let Options = document.getElementsByClassName('io-option active');
+            Array.prototype.forEach.call(Options, function (elem) {
+                //console.log(elem.getAttribute("value"))
+                if (elem.getAttribute("value") !== "0") {
+
+                    segments.push(
+                        {
+                            ID: elem.getAttribute("value")
+                        }
+                    );
+                }
+                
+            });
+        }
+
+        console.log(JSON.stringify(segments));
+
+        //return;
+        if (document.getElementById('txtTitle').value === '') {
+            fncreateAlert('Falta ingresar el titulo', 'danger');
+            return;
+        }
+        if (document.getElementById('txt_body').value === '') {
+            fncreateAlert('Falta ingresar la descripción', 'danger');
+            return;
+        }
+        fncreatefeedbackToUser("Procesando códigos");
+        $("#loading").addClass("flex");
+        let notification = {
+            body: document.getElementById('txt_body').value,
+            title: document.getElementById('txtTitle').value,
+            typeToggle: typeToggle,
+            segments: JSON.stringify(segments),
+            data: tokens
+        }
+        let xhr = new XMLHttpRequest();
+        xhr.responseType = "json";
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState == XMLHttpRequest.DONE) {
+                if (xhr.status == 200) {
+                    let res = xhr.response;
+                    if (res.STATUS) {
+                        fncreateAlert('Mensaje enviado exitosamente', 'success');
+                    }
+                    else {
+                        console.log(res);
+                        alert(res.MESSAGE);
+                    }
+                }
+                else {
+                    alert("http Preview responde con status " + xhr.status);
+                }
+                $("#loading").removeClass("flex");
+            }
+        };
+        xhr.open("POST", "/Notify/Send");
+        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xhr.send(JSON.stringify(notification));
+    }
+</script>
+}

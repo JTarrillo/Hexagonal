@@ -1,0 +1,52 @@
+﻿@{
+    ViewBag.Title = "Configuración";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section contentTitle{
+    <div class="bg-title">
+        <p class="title-page">Configuración de la aplicación</p>
+    </div>
+}
+
+@section contentBody{
+    <div class="row">
+        <div class="col-6 ant-form-group">
+            <span class="text-blue">Nombre</span>
+            <input class="input txtName" placeholder="Ingrese nombre" id="txtName" name="txtName" required/>
+        </div>
+        <div class="col-3 ant-form-group">
+            <span class="text-blue">Versión</span>
+            <input class="input txtVersion" placeholder="Versión" id="txtVersion" name="txtVersion" required/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6 ant-form-group">
+            <span class="text-blue">Url del logo</span>
+            <input class="input txtUrlLogo" placeholder="Ingrese descripción" id="txtUrlLogo" name="txtUrlLogo" required/>
+        </div>
+        <div class="col-6 ant-form-group">
+            <span class="text-blue">Url de la página oficial</span>
+            <input class="input txtVersionOficial" placeholder="Ingrese descripción" id="txtVersionOficial" name="txtVersionOficial" required/>
+        </div>
+    </div>
+    <div class="ant-form-group">
+        <span class="text-blue">Descripción</span>
+        <textarea class="input txtDescription"  rows="3" placeholder="Ingrese descripción" id="txtDescription" name="txtDescription" required></textarea>
+    </div>
+    <div class="row">
+        <div class="col-6 ant-form-group">
+            <span class="text-blue">Politicas de privacidad</span>
+            <textarea class="input w100 txtPolicy scroll-md" rows="10" placeholder="Ingrese descripción" id="txtPolicy" name="txtPolicy" required></textarea>
+        </div>
+        <div class="col-6 ant-form-group">
+            <span class="text-blue">Tratamiento de datos personales</span>
+            <textarea class="input w100 txtPerson scroll-md" rows="10" placeholder="Ingrese descripción" id="txtPerson" name="txtPerson" required></textarea>
+        </div>
+    </div>
+
+    <button style="display:none; visibility:hidden;" class='btn btn-orange' id="btn-save-add">Actualizar información</button>
+}
+
+<script src="~/Content/sicv1/js/Configuration/save.js"></script>
+<script src="~/Content/sicv1/js/openPanel.js"></script>

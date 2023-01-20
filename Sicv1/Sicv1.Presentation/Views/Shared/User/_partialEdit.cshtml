@@ -1,0 +1,124 @@
+﻿@using Sicv1.Infrastructure.Cross;
+<div class='customModal' id='modalEditUser'>
+	<div class="modal-dialog" role="document">
+		<div class='modal-content'>
+			<div class='modal-header'>
+				<h5 class='modal-title'>Editar usuario</h5>
+				<button type='button' id='btn-x' class='close' data-dismiss='modal' aria-label='Close'>
+					<span aria-hidden='true'>&times;</span>
+				</button>
+			</div>
+			<div class='modal-body'>				
+				@if (new int[] { 1, 2, 3 }.Contains(Util.MyUser.FK_ROLE))
+				{
+					<div class="row">
+						<div class='col-6 ant-form-group w100'>
+							<span>Roles</span><select id='cboRole' class='input' style="background-color:darkgrey;"></select>
+							@*<span>Roles</span><select id='cboRole' disabled class='input' style="background-color:darkgrey;"></select>*@
+
+						</div>
+						<div class='col-6 ant-form-group'>
+							<span>Estado</span><select id='cboEstado' class='input'>
+								<option value='1'>Activo</option>
+								<option value='0'>Inactivo</option>
+							</select>
+						</div>
+					</div>
+				}
+				else if (Util.MyUser.FK_ROLE == 5)
+				{
+					<div class="row">
+						<div class='col-6 ant-form-group w100'>
+							<span>Roles</span><select id='cboRole' class='input'></select>
+						</div>
+						<div class='col-6 ant-form-group'>
+							<span>Estado</span><select id='cboEstado' class='input'>
+								<option value='1'>Activo</option>
+								<option value='0'>Inactivo</option>
+							</select>
+						</div>
+					</div>
+				}
+
+				<div class='ant-form-group w100' id='div-cboTarjeta'>
+					<span>Usuario</span><select id='cboTarjeta' class='input'>
+						<option value='-1'>[Seleccione una opción de tarjeta]</option>
+						<option value='S'>Con tarjeta</option>
+						<option value='N'>Sin tarjeta</option>
+					</select>
+				</div>
+
+				<div class='ant-form-group' id='div-cboAlianzaToEditUser'>
+					<span>Usuario asociado a:</span><select id='cboAlianzaToEditUser' class='input'></select>
+				</div>
+
+
+				<div class='ant-form-group'><span>Nombres</span><input class='input' type='text' placeholder='Nombres' id='txtNameEditUser' /></div>
+				<div class='row'>
+					<div class='col-6 ant-form-group'><span>Apellido Paterno</span><input class='input' type='text' placeholder='Apellido Paterno' id='txtlastNamepEditUser' /></div>
+					<div class='col-6 ant-form-group'><span><label>Apellido Materno</label></span><input class='input' type='text' placeholder='Apellido Materno' id='txtlastNamemEditUser' /></div>
+				</div>
+
+				@*<div class='row'>
+					<div class='col-0 ant-form-group'></div>
+					<div class='col-12 ant-form-group' id='div-PasswordEditUser'><span id='lblpassword'>Password</span><input class='input' type='password' placeholder='Password' id='txtPasswordEditUser' /></div>
+				</div>*@
+
+				<div class='row'>
+					<div class='col-6 ant-form-group'>
+						<span>Tipo de documento</span>
+						<select id='cboTipoDoc' class='input'>
+							<option value='DNI'>DNI</option>
+							<option value='PAS'>Pasaporte</option>
+							<option value='CE'>Carnet de extranjería</option>
+							<option value='SDI'>Sin documento</option>
+						</select>
+					</div>
+					<div class='col-6 ant-form-group'><span><label>Número de documento</label></span><input type='text' class='input' placeholder='Número de documento' id='txtNumDocEditUser' /></div>
+				</div>
+
+				<div class='row'>
+					<div class='col-6 ant-form-group'>
+						<span>Teléfono de contacto</span>
+						<input type='text' class='input' placeholder='Teléfono' id='txtTelefEditUser' />
+					</div>
+					<div class='col-6 ant-form-group'>
+						<span>Género</span>
+						<select id='cboGender' class='input'>
+							<option value='MASCULINO'>Masculino</option>
+							<option value='FEMENINO'>Femenino</option>
+						</select>
+					</div>
+				</div>
+
+				<div class='row'>
+					<div class='col-6 ant-form-group'>
+						<span>Email</span><input type='text' autocomplete='off' class='input' placeholder='Email' id='txtEmailEditUser' />
+					</div>
+					<div class='col-6 ant-form-group'>
+						<span>Dirección</span><input type='text' class='input' placeholder='Dirección' id='txtDireccionEditUser' />
+					</div>
+				</div>
+
+				<div class='row'>
+					<div class='col-6 ant-form-group'>
+						<span>Departamento:</span>
+						<select id='cboDpto' class='input'></select>
+					</div>
+					<div class='col-6 ant-form-group'>
+						<span>Provincia:</span><select id='cboProv' class='input'></select>
+					</div>
+				</div>
+
+				<div class='ant-form-group'>
+					<span>Distrito:</span>
+					<select id='cboDist' class='input'></select>
+				</div>
+			</div>
+			<div class='modal-footer'>
+				<button id='btn-close' class='btn btn-secondary'>Cerrar</button>
+				<button id='btnUpdateUser' class='btn btn-primary'>Actualizar</button>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,128 @@
+﻿<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<style>
+    .table-bordered {
+        border: 0px solid #dee2e6 !important;
+    }
+    .cell-wrap-none{
+        white-space: normal !important;
+    }    
+</style>
+
+@{
+ViewBag.Title = "Sedes";
+Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section contentTitle
+{
+<div class="bg-title top-fixed-action">
+    <p class="title-page">Sedes</p>    
+</div>
+<div class="bg-title row">
+    <div class="col-6">
+        <select class="input form-control mb-0" id="cboCompany">
+             <option value="0" disabled="" selected="">[Seleccione Alianza]</option>
+        </select>
+    </div>
+    <div class="col-6">
+        <input type="button" id="btn-add-branchOffices" class="btn btn-orange" value="Agregar Cede" />
+    </div> 
+</div>
+<div class="space-top-fixed-action"></div>
+}
+
+@section contentBody
+{
+
+<div id="div-tabla" class="bg-table">
+    <div class="scroll-md w100">
+        <table id="tbl-branchOffices" class="table box-table table-bordered" style="width: 100%;">
+            <thead class="thead">
+                <tr class="row-box">
+                    <th class="title">Id</th>
+                    <th class="title">Alianza</th>
+                    <th class="title">Cede</th>
+                    <th class="title">Ciudad</th>                    
+                    <th class="title">Estado</th> 
+                    <th class="title"></th>                     
+                </tr>
+            </thead>
+            <tbody id="tbody-branchOffices"></tbody>
+        </table>
+    </div>
+</div>
+
+<div class='customModal' id='modalAddBranchOffices' role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class='modal-content'>
+            <input type="hidden" id="idBranchOffices">
+            <div class='modal-header'>
+                <h5 id="modal-title" class='modal-title'>Agregar Cede</h5>
+                <button type='button' id='btn-x' class='close' data-dismiss='modal' aria-label='Close'>
+                    <span aria-hidden='true'>&times;</span>
+                </button>
+            </div>
+            <div class='modal-body'>
+                <div class="container">
+                    <div class="row">
+                        <div class="col p-0">
+                            <div class="ant-form-group">
+                                <span>Nombre Cede</span> 
+                                <input name="NAME" class="input" type="text" id="txtName">
+                            </div>
+                        </div>                        
+                    </div>                    
+                    <div class="row">
+                        <div class="col p-0">
+                            <div class="ant-form-group">
+                                <span>Direccion:</span>
+                                <input name="DIRECTION" class="input" type="text" id="txtDirection">
+                            </div>
+                        </div>                        
+                    </div>
+                    <div class="row">
+                        <div class="col-6 p-1">
+                            <div class="ant-form-group">
+                                <span>Latitud:</span>
+                                <input name="LATITUDE" class='input' type='text' id='txtLatitude' />
+                            </div>
+                        </div>
+                        <div class="col-6 p-1">
+                            <div class="ant-form-group">
+                                <span>Longitud:</span>
+                                <input name="LONGITUDE" class='input' type='text' id='txtLongitude' />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 p-1">
+                            <div class="ant-form-group">
+                                <span>Ciudad:</span>
+                                <select class="input" id="cboCountry">
+                                    <option value="0" disabled="" selected="">[Seleccione]</option>
+                                </select>
+                            </div>                            
+                        </div>
+                        <div class="col-6 p-1">
+                            <div class="ant-form-group">
+                                <span>Telefono:</span>
+                                <input name="PHONE" class='input' type='text' id='txtPhone' />
+                            </div>                            
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btn-close-Add" class="btn btn-pink">Cerrar</button>
+                <button type="button" id="btn-save-add" class="btn btn-blue">Grabar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+<script defer src="~/Content/sicv1/js/BranchOffices/BranchOfficesController.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+}

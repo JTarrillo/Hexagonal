@@ -1,0 +1,235 @@
+﻿<link href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/buttons/2.1.0/css/buttons.dataTables.min.css" rel="stylesheet" />
+@{
+    ViewBag.Title = "Parametros";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section contentTitle{
+    @* <div class="bg-title top-fixed-action">
+        <p class="title-page">Parametros</p>
+
+
+        <input type="button" class="btn btn-orange" value="Crear Parametro" id="btn-add-parameter">
+    </div> *@
+    <section class="title-custom-page">
+    <div class="row ml-1">
+        <div>
+            <p class="text-header-sic">Parametros</p>
+        </div>
+        <div class="ml-auto mr-3">
+            <button id="btn-modal-params" class="btn btn-primary">Agregar Parametros</button>
+        </div>
+    </div>
+</section>
+}
+
+@section contentBody
+{
+    @if (Session["user"] != null)
+    {
+       User user = (User)Session["user"];
+        
+            <input type="hidden" name="idUserRole" id="idUserRole" class="input idUserRole" value="@user.FK_ROLE" />
+    }
+            <div id="divModalEditUser"></div>
+            <div id="divModalAddUser"></div>
+            <div id="div-tabla" class="bg-table shadow">
+                <section class="w100 space-between margin-b wrap">
+
+                    <div>
+
+                    </div>
+
+                    <link href="~/Content/jQueryUI/css/jquery-ui.css" rel="stylesheet" />
+
+                    <script src="~/Content/sicv1/js/feedbackUser.js"></script>
+                    <script src="~/Content/jQueryUI/js/jquery-ui.js"></script>
+                    <script src="~/Content/sicv1/js/searchByDates.js"></script>
+
+                    <div class="center-v w100xs xs-margin-t">
+                        <div class="box-search">
+                            <input type="text" id="search" class="search-child" placeholder="Nro. de documento" title="Ingrese Nro. de documento del usuario a buscar" />
+                            <div class="box-icon" id="btn-buscar" title="Buscar usuario por Nro. de documento">
+                                <i class="fas fa-search icon"></i>
+                            </div>
+                        </div>
+                        <div class="i-btn-circle margin-l i-delete" id="btn-cancelar-busqueda">
+                            <i class="fas fa-times icon"></i>
+                            <span class="">Cancelar</span>
+                        </div>
+                    </div>
+                </section>
+                <section class="scroll-md w100">
+                    <div id="div-tabla" class="bg-table">
+                        <section class="scroll-md w100">
+                            <table id="tbl-parameter" class="box-table" style="width: 100%;">
+                                <thead class="thead">
+                                    <tr class="row-box">
+                                        <th class="title">Id</th>
+                                        <th class="title">Nombre</th>
+                                        <th class="title">Descripcion</th>
+                                        <th class="title">Valor</th>
+                                        <th class="title">Estado</th>
+                                        <th class="title"></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody-parametery"></tbody>
+                            </table>
+                        </section>
+                    </div>
+
+                </section>
+
+            </div>
+
+            <div class='customModal' id='modalParameter' role="dialog">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class='modal-content'>
+                        <input type="hidden" class="input idParameter" id="idParameter" name="idParameter">
+                        <input type="hidden" class="input updateOsave" id="updateOsave" name="updateOsave">
+                        <div class='modal-header'>
+                            <h5 class='modal-title' id="modal-title">Agregar Parametro Padre</h5>
+                            <button type='button' id='btn-x' class='close' data-dismiss='modal' aria-label='Close'>
+                                <span aria-hidden='true'>&times</span>
+                            </button>
+                        </div>
+                        <div class='modal-body'>
+                            <div id="rowCboCompany" class="row">
+                                <div class="col-8 ant-form-group">
+                                    <span>Empresa</span>
+                                    <select id="cboCompany" class="input cboCompany" autocomplete="none">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class='ant-form-group'>
+                                <span>Nombre Parametro</span>
+                                <input class='input ' type='text' placeholder='Nombre Parametro' id='nombre_parametro' name="nombre_parametro" required />
+                            </div>
+
+                            <div class='row'>
+                                <div class='col-12 ant-form-group'>
+                                    <span>Descripcion</span>
+                                    <input class='input' type='text' placeholder='Descripcion Parametro' id='descrip_parametro' name="descrip_parametro" />
+                                </div>
+                                <div class='col-12 ant-form-group'>
+                                    <span>Valor Parametro</span>
+                                    <input class='input valor_parametro' type='text' placeholder='Valor Parametro' id='valor_parametro' name="valor_parametro" required />
+                                </div>
+                            </div><br>
+                        </div>
+                        <div class='modal-footer'>
+                            <button id='btn-close' class='btn btn-secondary'>Cerrar</button>
+                            <button id='btnGrabarAddParameter' class='btn btn-primary'>Grabar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class='customModal modalAddItemParameter' id='modalAddItemParameter' role="dialog">
+                <div class="modal-dialog modal-dialog-centered" style="max-width: 800px !important; " role="document">
+                    <div class='modal-content'>
+                        <input type="hidden" class="input idParameter2" id="idParameter2" name="idParameter2">
+                        <input type="hidden" class="input updateOsave2" id="updateOsave2" name="updateOsave2">
+                        <input type="hidden" class="input companyId" id="companyId" name="companyId">
+                        <div class='modal-header'>
+                            <h5 class='modal-title-item' id="modal-title-item">Agregar Item Parametro Padre: </h5>
+                            <button type='button' id='btn-x' class='close' data-dismiss='modal' aria-label='Close'>
+                                <span aria-hidden='true'>&times</span>
+                            </button>
+                        </div>
+                        <div class='modal-body'>
+                            <div class='row'>
+                                <div class='col-6 ant-form-group'>
+                                    <input class='input nombre_parametro' type='text' placeholder='Nombre Parametro' id='nombre_parametro' name="nombre_parametro" required />
+                                </div>
+
+                                <div class='col-6 ant-form-group'>
+                                    <button id='btn-add-item' onclick="btnAddItem()" class='btn btn-secondary btn-add-item' title="Agregar Item Hijo"><i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class='col-12'>
+                                    <div id="div-tabla2" class="bg-table shadow">
+                                        <section class="scroll-md w100">
+                                            <div id="div-tabla3" class="bg-table">
+                                                <section class="scroll-md w100">
+                                                    <table id="tbl-parameter" class="box-table-t" style="width: 100%;">
+                                                        <thead class="thead">
+                                                            <tr class="row-box">
+                                                                <th class="title">Id</th>
+                                                                <th class="title">Nombre</th>
+                                                                <th class="title">Descripcion</th>
+                                                                <th class="title">Valor</th>
+                                                                <th class="title">Estado</th>
+                                                                <th class="title"></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="tbody-parametery"></tbody>
+                                                    </table>
+                                                </section>
+                                            </div>
+
+                                        </section>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class='modal-footer'>
+                            <button id='btn-close' class='btn btn-secondary'>Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class='customModal' id='modalAddChildren' role="dialog">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class='modal-content'>
+                        <input type="hidden" class="input idParameter3" id="idParameter3" name="idParameter3">
+                        <input type="hidden" class="input updateOsave3" id="updateOsave3" name="updateOsave3">
+                        <div class='modal-header'>
+                            <h5 class='modal-title-children' id="modal-title-children">Agregar Parametro Hijo</h5>
+                            <button type='button' id='btn-x-children' class='close' data-dismiss='modal' aria-label='Close'>
+                                <span aria-hidden='true'>&times</span>
+                            </button>
+                        </div>
+                        <div class='modal-body'>
+
+                            <div class='ant-form-group'>
+                                <span>Nombre Parametro hijo</span>
+                                <input class='input nombre_parametro_hijo' type='text' placeholder='Nombre Parametro Hijo' id='nombre_parametro_hijo' name="nombre_parametro_hijo" required />
+                            </div>
+
+                            <div class='row'>
+                                <div class='col-12 ant-form-group'>
+                                    <span>Descripcion</span>
+                                    <input class='input descrip_parametro_hijo' type='text' placeholder='Descripcion Parametro Hijo' id='descrip_parametro_hijo' name="descrip_parametro_hijo" />
+                                </div>
+                                <div class='col-12 ant-form-group'>
+                                    <span>Valor Parametro Hijo</span>
+                                    <input class='input valor_parametro_hijo' type='text' placeholder='Valor Parametro Hijo' id='valor_parametro_hijo' name="valor_parametro_hijo" required />
+                                </div>
+                            </div><br>
+
+
+                        </div>
+                        <div class='modal-footer'>
+                            <button id='btn-close-children' class='btn btn-secondary'>Cerrar</button>
+                            <button id='btnGrabarAddChildren' class='btn btn-primary'>Grabar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+            @Html.Partial("User/_partialEdit")
+
+            <script src="~/Content/moment/moment.min.js"></script>
+            <script src="~/Content/sicv1/js/validateControls.js"></script>
+            <script src="~/Content/sicv1/js/Parameter/controller.js"></script>
+            <script src="~/Content/sicv1/js/User/search.js"></script>
+
+        }

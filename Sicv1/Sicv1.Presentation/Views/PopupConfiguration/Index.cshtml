@@ -1,0 +1,81 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*@section contentTitle{
+        <div class="bg-title">
+            <p class="title-page">Popup</p>
+        </div>
+    }*@
+
+@section contentBody{
+    <div>
+        <input type="hidden" id="hd_Id"/>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="bg-title">
+                <p class="title-page">Popup inicial</p>
+            </div>
+            <div class="ant-form-group">
+                <span>Enlace de imagen:</span>
+                <input type="text" class="input" id="txt_linkImage" placeholder="Enlace de la imagen" required="">
+                <div class="eye-open-url" onclick="IoUrlOpen(this)"><i class="fas fa-eye"></i></div>
+            </div>
+           
+            <div class="ant-form-group hidden">
+                <span>Descripción:</span>
+                <input type="text" name="name" id="txt_description" class="input" required /><br />
+            </div>
+            <br />
+            <div class="ant-form-group">
+                <span>¿Es linkeable?:</span>
+                <span>Si <input type="radio" onchange="onLinkVisible()" name="rbLinkear" id="rbLinkearSi" value="True" /></span>
+                <span>No <input type="radio" onchange="blurLinkVisible()" name="rbLinkear" id="rbLinkeaNo" value="False" /></span>
+            </div>
+            <br />
+            <div class="ant-form-group js-box-url hidden">
+                <span>URL:</span>
+                <input type="text" name="name" id="txt_url" class="input" required /><br />
+            </div>
+            <br />
+            <div class="ant-form-group">
+                <span>Estado del popup:</span>
+                <span>Activo <input type="radio" name="rbEstado" id="rbEstadoAct" /></span>
+                <span>Inactivo <input type="radio" name="rbEstado" id="rbEstadoInact" /></span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="bg-title">
+                <p class="title-page">Banner en actualizar perfil</p>
+            </div>
+            <div class="ant-form-group">
+                <span>Enlace de imagen:</span>
+                <input type="text" class="input" id="txt_lnkImage_banner" placeholder="Enlace de la imagen" required="">
+                <div class="eye-open-url" onclick="IoUrlOpen(this)"><i class="fas fa-eye"></i></div>
+            </div>
+            <br />
+            <div class="ant-form-group">
+                <span>Términos y condiciones:</span>
+                <textarea class="input text-area" rows="7" id="txttermBanners"></textarea><br/>
+            </div>
+            <br/>
+            <div class="ant-form-group">
+                <span>Estado del popup:</span>
+                <span>Activo <input type="radio" name="rbEstado2" id="rbEstadoActBanner"/></span>
+                <span>Inactivo <input type="radio" name="rbEstado2" id="rbEstadoInactBanner"/></span>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <br/>
+            <br/>
+            <br/>
+            <div class="container center">
+                <input type="button" name="name" value="Actualizar valores" id="btn-actualizar-pop-conf" class="btn btn-orange"/>
+            </div>
+        </div>
+    </div>
+    <script src="~/Content/sicv1/js/PopupConfiguration/script.js"></script>
+}

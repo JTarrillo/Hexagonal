@@ -1,0 +1,437 @@
+﻿<div class="customModal" id="EditCouponModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span>Editar cupón</span>
+                <button type="button" id="btn-x" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @Html.AntiForgeryToken()
+
+
+                <div class="column">
+                    <p class="text-blue f-10">Segmentos que pueden visualizar este cupón</p>
+                    <div class="box-filter-coupon">
+                        <div class="same">
+                            <p>Súper Ultra</p>
+                            <div class="item">
+                                <input type="checkbox" class="text-center" data-id="1" name="optCardEdit" id="chk1" value="false">
+                            </div>
+                        </div>
+                        <div class="same">
+                            <p>Ultra</p>
+                            <div class="item">
+                                <input type="checkbox" class="text-center" data-id="2" name="optCardEdit" id="chk2" value="false">
+                                <input type="hidden" class="text-center" name="idCouponHidden" id="idCouponHidden">
+                            </div>
+                        </div>
+                        <div class="same">
+                            <p>Zafiro</p>
+                            <div class="item">
+                                <input type="checkbox" class="text-center" data-id="3" name="optCardEdit" id="chk3" value="false">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-filter-coupon">
+                        <div class="same">
+                            <p>Rubí</p>
+                            <div class="item">
+                                <input type="checkbox" class="text-center" data-id="4" name="optCardEdit" id="chk4" value="false">
+                            </div>
+                        </div>
+                        <div class="same">
+                            <p>Selecto</p>
+                            <div class="item">
+                                <input type="checkbox" class="text-center" data-id="5" name="optCardEdit" id="chk5" value="false">
+                            </div>
+                        </div>
+                        <div class="same">
+                            <p>Externo</p>
+                            <div class="item">
+                                <input type="checkbox" class="text-center" data-id="6" name="optCardEdit" id="chk6" value="false">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ant-form-group">
+                        <span>Tipo</span>
+                        <select id="cboCouponTypeEdit" class="input">
+                            <option value="-1">[Seleccione uno]</option>
+                            <option value="CUPON">Cupón</option>
+                            <option value="AGENDAR">Agendamiento</option>
+                            <option value="LLAMADA">Llamada</option>
+                            <option value="URL">URL</option>
+                        </select>
+                    </div>
+                </div>
+                @* START YUKIDS *@
+            <div class="column">
+                <div class="row section-link d-none">
+                    <div class="col-12 ant-form-group">
+                        <span class="ant-form-group">URL:</span>
+                        <input class='input' type='text' id='urlLinkEdit' autocomplete="off" />
+                    </div>
+                </div>
+                <div class="row section-qr">
+                    <div class="col-12 ant-form-group">
+                        <span>Mostrar imagen del código QR/Barras:</span>
+                        <select id="cboShowImageEdit" style="width: 80px" class=" input margin-b">
+                            <option value="0">NO</option>
+                            <option value="1">SI</option>
+                        </select>
+                    </div>
+                    <div class="col-4 ant-form-group">
+                        <span>Formato:</span>
+                        <select id="cboBarcodeFormatEdit" class="input margin-b" onchange="onChangeIndexEdit(this)">
+                            <option value="-1">Seleccione uno</option>
+                            <option value="qr">CÓDIGO QR</option>
+                            <option value="code128">CÓDIGO BARRAS - CODE 128</option>
+                            <option value="itf">CÓDIGO BARRAS - ITF</option>
+                            <option value="code39">CÓDIGO BARRAS - CODE39</option>
+                        </select>
+                    </div>
+                    <div class="col-3 ant-form-group dvTpeStaticEdit" style="display: none">
+                        <span>Tipo:</span>
+                        <select id="cboTypeStaticEdit" class="input margin-b" onchange="selecteTypeIndexEdit(this)">
+                            <option value="static">Estático</option>
+                            <option value="dynamic">Dinámico</option>
+                        </select>
+                    </div>
+                    <div class="col-3 ant-form-group dvTxtBarcodeEdit" style="display: none">
+                        <span>Código:</span>
+                        <input class="input" type="text" name="barcodeEdit" id="barcodeEdit" value="" style="margin-bottom: 0" />
+                    </div>
+                    <div class="col-2 ant-form-group dvButtonViewEdit" id="dvButtonViewEdit" style="display: none">
+                        <span>&nbsp;</span>
+                        <input class="dt-button" type="button" value="Ver" style="margin-bottom: 0" onclick="genetareCodeEdit2()" />
+                    </div>
+                    <div class="col-12 ant-form-group dvBarcodeRenderEdit" id="dvBarcodeRenderEdit" style="display: none; justify-content: center;">
+                        <svg id="barcodeSVGEdit"></svg>
+                    </div>
+                    <div class="col-12 ant-form-group dvQRRenderEdit" id="dvQRRenderEdit" style="display: none">
+                    </div>
+                </div>
+            </div>
+                @* END YUKIDS *@
+                <br>
+
+                <div class="box-coupon-edit">
+                    <div class="column margin-b">
+                        <p class="text-blue f-10">¿Seleccione a qué alianza pertenece este cupón?</p>
+                        <select class="input margin-b" id="cbo-lstCatEdit"></select>
+                        @* LIFEMILES *@
+                        <div class='ant-form-group'>
+                            ¿Participa LifeMiles?<br />
+                            No <input type='radio' class='text-center' id='chkNOparticipatelifesmilesEditCoupon'>
+                            &nbsp;Si <input type='radio' class='text-center' id='chkSIparticipatelifesmilesEditCoupon'>
+                        </div>
+                        <br />
+                        <span class="ant-form-group">Número de millas </span>
+                        <input class='input' disabled type='text' id='txtnumeromillasEditCoupon' maxlength='6' />
+
+                        <div class="row">
+                            <div class="ant-form-group col-6">
+                                <select class="input" id="cbo-catParents-edit"></select>
+                            </div>
+                            <div class="ant-form-group col-6">
+                                <select class="input" id="cbo-catsChildByParentIdLevel-edit0"></select>
+                            </div>
+                        </div>
+                        <select class="input" id="cbo-catsChildByParentIdLevel-edit1"></select>
+                    </div>
+
+                    <div class="section-image filter-st">
+                        <div class="box-image">
+                            <img src="#" id="imgModal" class="image" />
+
+                        </div>
+                        <label class="btn-selected-file" for="inputFile">Seleccione imagen</label>
+
+                        <input class="hidden" type="file" id="inputFile" name="inputFile" onchange="fnRenderImage(this, '#imgModal', '#hdimgBase64', '#hdStatusOriginalImage', 1000000);" accept="image/jpeg, image/png" /><br />
+                        <input class="hidden" type="hidden" id="hdimgBase64" name="hdimgBase64" value="" /><br />
+
+                        <input type="hidden" id="hdPriceEdit" value="" />
+                        <input type="hidden" id="hdPorcentEdit" value="" />
+
+                        @* el id de los registros de la tabla CATEGORIES_CARDS, para poder realizar el update *@
+                        <input type="hidden" id="hdidTieneTarjeta" value="" />
+                        <input type="hidden" id="hdidNoTieneTarjeta" value="" />
+
+
+                        @* permite saber si el usuario ha elegido una nueva imagen o no *@
+                        <input class="hidden" type="hidden" id="hdStatusOriginalImage" value="" />
+
+                    </div>
+
+                    <input type="hidden" id="hdCategoryId" name="hdCategoryId" value="" />
+                    <input type="hidden" id="hdFileName" name="hdFileName" value="" />
+                    <input type="hidden" id="hdStatusToggle" value="" />
+
+                    <input type="hidden" id="hdpriceEdit" value="" />
+                    <input type="hidden" id="hdpercentageEdit" value="" />
+
+                    <input type="hidden" name="hdstar1" id="hdstar1" value="" />
+                    <input type="hidden" name="hdstar2" id="hdstar2" value="" />
+                    <input type="hidden" name="hdstar3" id="hdstar3" value="" />
+                    <input type="hidden" name="hdstar4" id="hdstar4" value="" />
+                    <input type="hidden" name="hdstar5" id="hdstar5" value="" />
+
+                    <div class="ant-form-group">
+                        <span>Título</span>
+                        <textarea class="input text-area" placeholder="Ingrese un título" id="txtTitle" name="txtTitle" maxlength="250" required></textarea>
+                    </div>
+
+                    <div class="ant-form-group">
+                        <span>Descripción</span>
+                        <textarea class="input text-area h100p" placeholder="Ingrese descripción" id="txtDescription" name="txtDescription" maxlength="500" required></textarea>
+                    </div>
+
+                    <div>
+                        <span>Condiciones</span>
+                        <textarea class="input text-area h100p" placeholder="Ingrese condiciones" id="txtConditions" name="txtConditions" maxlength="10000" required></textarea>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6 ant-form-group">
+                            <span>Seleccione tipo</span>
+                            <div class="box-toggle" id="toggle-status">
+                                <span class="item-same item-l" onclick="toggleLeft('toggle-status','#lblValPorcentPrice','Precio');">Precio</span>
+                                <span class="item-same item-r" onclick="toggleRight('toggle-status','#lblValPorcentPrice','Porcentaje');">Porcentaje</span>
+                                <div class="toggle-status item-same"></div>
+                            </div>
+                        </div>
+                        <div class="col-6 ant-form-group">
+                            <span id="lblValPorcentPrice"></span>
+                            <input class="input" type="text" id="txtValPorcentPrice" required />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 ant-form-group">
+                            <span>Fecha inicial:</span>
+                            <input class="input" type="text" id="dtpIniEdit" required>
+                        </div>
+                        <div class="col-6 ant-form-group">
+                            <span>Fecha Final:</span>
+                            <input class="input" type="text" id="dtpFinEdit" required>
+                        </div>
+                    </div>
+                    <div class="row udpframeSocialNetwork">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-9">
+                                    <p class="text-blue f-10">Editar Web o Redes sociales</p>
+                                </div>
+                                <div class="col-3">
+                                  <div class="btn btn-blue" onclick="addEditSocialNetwork()">Nuevo</div>
+                                </div>
+                            </div>
+                            @* ---- *@
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btn-close" class="btn btn-pink" data-dismiss="modal">Cerrar</button>
+                <button type="button" id="btn-update" class="btn btn-blue" data-dismiss="modal">Actualizar</button>
+            </div>
+        </div>
+    </div>
+    <div id="divAlertEdit"></div>
+</div>
+
+<script src="~/Content/moment/moment.min.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="~/Content/jQueryUI/js/jquery-ui.js"></script>
+<script src="~/Content/sicv1/js/Coupon/inputSelect.js"></script>
+<script src="~/Content/sicv1/js/Coupon/edit.js"></script>
+<script src="~/Content/sicv1/js/Coupon/save.js"></script>
+<script src="~/Content/sicv1/js/Coupon/update.js"></script>
+
+<script>
+    $(function () {
+        fndatePicker("#dtpIniEdit");
+        fndatePicker("#dtpFinEdit");
+        $("#lblValPorcentPrice").text("Precio");
+        fnvalidateNumberWithDecimals("#txtValPorcentPrice");
+    });
+
+    function selecteTypeIndexEdit(control) {
+        var selectedValue = control.value;
+        var dvTxtBarcodeEdit = document.querySelector(".dvTxtBarcodeEdit")
+        var dvButtonViewEdit = document.getElementById("dvButtonViewEdit")
+        var barcodeEdit = document.getElementById("barcodeEdit")
+        var dvBarcodeRenderEdit = document.querySelector(".dvBarcodeRenderEdit")
+        var dvQRRenderEdit = document.querySelector(".dvQRRenderEdit");
+        if (selectedValue === 'static') {
+            dvTxtBarcodeEdit.style.display = 'block';
+            dvButtonViewEdit.style.display = 'block';
+            //dvBarcodeRender.style.display = 'block';
+        } else {
+            dvBarcodeRenderEdit.style.display = 'none';
+            dvTxtBarcodeEdit.style.display = 'none';
+            dvButtonViewEdit.style.display = 'none';
+            dvQRRenderEdit.style.display = 'none'
+            barcodeEdit.value = "";
+        }
+    }
+
+    function onChangeIndexEdit(control) {
+        var selectedValue = control.value;
+        var dvTxtBarcode = document.querySelector(".dvTxtBarcodeEdit")
+        var dvButtonView = document.getElementById("dvButtonViewEdit")
+        var dvTpeStatic = document.querySelector(".dvTpeStaticEdit");
+        var cboTypeStatic = document.getElementById("cboTypeStaticEdit");
+        var dvBarcodeRender = document.querySelector(".dvBarcodeRenderEdit")
+        if (selectedValue === '-1') {
+            dvButtonView.style.display = 'none'
+            dvTpeStatic.style.display = 'none'
+            dvTxtBarcode.style.display = 'none';
+            dvBarcodeRender.style.display = 'none';
+            cboTypeStatic.value = "static";
+            barcodeX.value = "";
+        } else if (selectedValue === 'qr') {
+            dvButtonView.style.display = 'block'
+            dvTpeStatic.style.display = 'block'
+            dvTxtBarcode.style.display = 'block';
+            dvBarcodeRender.style.display = 'none';
+            cboTypeStatic.value = "static";
+        } else {
+            dvButtonView.style.display = 'block'
+            dvTpeStatic.style.display = 'block'
+            dvTxtBarcode.style.display = 'block';
+            dvBarcodeRender.style.display = 'none';
+            cboTypeStatic.value = "static";
+        }
+    }
+
+    function genetareCodeEdit2() {
+        var e = document.getElementById("cboBarcodeFormatEdit");
+        var selectedValue = e.options[e.selectedIndex].value;
+        var barcodeXValue = document.getElementById("barcodeEdit").value;
+        var dvBarcodeRender = document.querySelector(".dvBarcodeRenderEdit");
+        var dvQRRender = document.querySelector(".dvQRRenderEdit");
+        if (barcodeXValue === '') {
+            alert("Debe ingresar un código de cupon2");
+        } else {
+            if (selectedValue === '-1') {
+                dvBarcodeRender.style.display = 'none';
+                dvQRRender.style.display = 'none';
+                dvQRRender.innerHTML = '';
+            } else if (selectedValue === 'qr') {
+                dvBarcodeRender.style.display = 'none';
+                dvQRRender.style.display = 'flex'
+                dvQRRender.style.justifyContent = 'center'
+                dvQRRender.innerHTML = '';
+                var miCodigoQR = new QRCode(dvQRRender, {
+                    text: barcodeXValue,
+                    width: 128,
+                    height: 128,
+                    colorDark: "#000000",
+                    colorLight: "#ffffff",
+                    correctLevel: QRCode.CorrectLevel.H
+                });
+                miCodigoQR.clear();
+                miCodigoQR.makeCode(barcodeXValue);
+            } else {
+                dvBarcodeRender.style.display = 'flex';
+                dvBarcodeRender.style.justifyContent = 'center'
+                dvQRRender.style.display = 'none'
+                dvQRRender.innerHTML = '';
+                JsBarcode("#barcodeSVGEdit", barcodeXValue, {
+                    format: selectedValue || 'code128',
+                    lineColor: "#333",
+                    width: 1,
+                    height: 50,
+                    displayValue: false
+                });
+            }
+        }
+    }
+    function selectTypeUrl(e) {
+        try {
+            let content = e.parentNode.parentNode
+            let sltSocial = content.querySelector(".sltSocial")
+            let iptTitle = content.querySelector(".iptTitle")
+            let iptUrl = content.querySelector(".iptUrl")
+
+            let selectedValue = e
+            switch (selectedValue.value) {
+                case "1": {
+                    sltSocial.style = "display: grid;"
+                    iptTitle.style = "display: none;"
+                    iptUrl.style = "display: grid;"
+                    break
+                }
+                case "2": {
+                    sltSocial.style = "display: none;"
+                    iptTitle.style = "display: grid;"
+                    iptUrl.style = "display: grid;"
+                    break
+                }
+                default: {
+                    sltSocial.style = "display: none;"
+                    iptTitle.style = "display: none;"
+                    iptUrl.style = "display: none;"
+                    break
+                }
+            }
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    function selecteTypeIndex(control) {
+        var selectedValue = control.value;
+        var dvTxtBarcode = document.querySelector(".dvTxtBarcode")
+        var dvButtonView = document.getElementById("dvButtonView")
+        var barcodeX = document.getElementById("barcodeX")
+        var dvBarcodeRender = document.querySelector(".dvBarcodeRender")
+        var dvQRRender = document.querySelector(".dvQRRender");
+        if (selectedValue === 'static') {
+            dvTxtBarcode.style.display = 'block';
+            dvButtonView.style.display = 'block';
+            //dvBarcodeRender.style.display = 'block';
+        } else {
+            dvBarcodeRender.style.display = 'none';
+            dvTxtBarcode.style.display = 'none';
+            dvButtonView.style.display = 'none';
+            dvQRRender.style.display = 'none'
+            barcodeX.value = "";
+        }
+    }
+  
+
+    function selectOption(elem, id, multi) {
+        let input = elem.querySelector('input');
+        let text_option = elem.querySelector('p');
+        let all = document.querySelectorAll('.io-option');
+        let select = elem.parentNode.parentNode;
+        let span = select.querySelector('.io-select span');
+        let value = '';
+        //multi select
+        if (multi == true) {
+            if (input.checked === false) {
+                elem.classList.add('active');
+                input.checked = true
+            } else {
+                elem.classList.remove('active');
+                input.checked = false
+            }
+        } else {
+            //only select
+            for (const item of all) {
+                item.classList.remove('active');
+                input.checked = false;
+            }
+            elem.classList.add('active');
+            input.checked = true;
+            value = text_option.textContent
+            span.textContent = value
+        }
+    }
+</script>
+
+<script src="https://cdn.jsdelivr.net/jsbarcode/3.3.7/JsBarcode.all.min.js"></script>

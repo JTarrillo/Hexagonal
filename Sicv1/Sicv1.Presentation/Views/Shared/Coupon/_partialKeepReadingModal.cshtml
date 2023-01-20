@@ -1,0 +1,40 @@
+﻿<div class="customModal" id="keepReadingCouponModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content f-8">
+      <div class="modal-header">
+        <h5 class="text-blue bold">Vista detalle</h5>
+        <button type="button" id="btn-x" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="margin-b center-v" style="background: var(--white)">
+                <div class="cover r w200p h100p filter-st">
+                  <img id="objImg" class="image"/>
+                </div>
+                <div class="column">
+                  <h2 class="modal-title customTitleModal bold" style="font-size: 1rem; color: var(--blue)"></h2>
+                  <div class="margin">
+                    <svg width='120' viewBox='0 0 94 14'>
+                      <path stroke="var(--orange)" fill="none" id="sm1" d="M7.263,1.444,8.756,4.471a.713.713,0,0,0,.537.39l3.341.485a.713.713,0,0,1,.4,1.216L10.612,8.92a.713.713,0,0,0-.205.631l.571,3.327a.713.713,0,0,1-1.035.752L6.955,12.059a.714.714,0,0,0-.664,0L3.3,13.63a.713.713,0,0,1-1.035-.752l.571-3.327a.713.713,0,0,0-.205-.631L.217,6.563a.713.713,0,0,1,.4-1.216l3.341-.485a.713.713,0,0,0,.537-.39L5.984,1.444A.713.713,0,0,1,7.263,1.444Z" transform="translate(1 -.5)"/>
+                      <path stroke="var(--orange)" fill="none" id="sm2" data - name="estrella" d="M7.263,1.444,8.756,4.471a.713.713,0,0,0,.537.39l3.341.485a.713.713,0,0,1,.4,1.216L10.612,8.92a.713.713,0,0,0-.205.631l.571,3.327a.713.713,0,0,1-1.035.752L6.955,12.059a.714.714,0,0,0-.664,0L3.3,13.63a.713.713,0,0,1-1.035-.752l.571-3.327a.713.713,0,0,0-.205-.631L.217,6.563a.713.713,0,0,1,.4-1.216l3.341-.485a.713.713,0,0,0,.537-.39L5.984,1.444A.713.713,0,0,1,7.263,1.444Z" transform="translate(20 -.5)"/>
+                      <path stroke="var(--orange)" fill="none" id="sm3" data - name="estrella" d="M7.263,1.444,8.756,4.471a.713.713,0,0,0,.537.39l3.341.485a.713.713,0,0,1,.4,1.216L10.612,8.92a.713.713,0,0,0-.205.631l.571,3.327a.713.713,0,0,1-1.035.752L6.955,12.059a.714.714,0,0,0-.664,0L3.3,13.63a.713.713,0,0,1-1.035-.752l.571-3.327a.713.713,0,0,0-.205-.631L.217,6.563a.713.713,0,0,1,.4-1.216l3.341-.485a.713.713,0,0,0,.537-.39L5.984,1.444A.713.713,0,0,1,7.263,1.444Z" transform="translate(40 -.5)"/>
+                      <path stroke="var(--orange)" fill="none" id="sm4" data - name="estrella" d="M7.263,1.444,8.756,4.471a.713.713,0,0,0,.537.39l3.341.485a.713.713,0,0,1,.4,1.216L10.612,8.92a.713.713,0,0,0-.205.631l.571,3.327a.713.713,0,0,1-1.035.752L6.955,12.059a.714.714,0,0,0-.664,0L3.3,13.63a.713.713,0,0,1-1.035-.752l.571-3.327a.713.713,0,0,0-.205-.631L.217,6.563a.713.713,0,0,1,.4-1.216l3.341-.485a.713.713,0,0,0,.537-.39L5.984,1.444A.713.713,0,0,1,7.263,1.444Z" transform="translate(60 -.5)"/>
+                      <path stroke="var(--orange)" fill="none" id="sm5" data - name="estrella" d="M7.263,1.444,8.756,4.471a.713.713,0,0,0,.537.39l3.341.485a.713.713,0,0,1,.4,1.216L10.612,8.92a.713.713,0,0,0-.205.631l.571,3.327a.713.713,0,0,1-1.035.752L6.955,12.059a.714.714,0,0,0-.664,0L3.3,13.63a.713.713,0,0,1-1.035-.752l.571-3.327a.713.713,0,0,0-.205-.631L.217,6.563a.713.713,0,0,1,.4-1.216l3.341-.485a.713.713,0,0,0,.537-.39L5.984,1.444A.713.713,0,0,1,7.263,1.444Z" transform="translate(80 -.5)"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+        <p id="lblConditions" class="text-gray text-justify"></p>
+        <div class="space-between">
+          <p class="text-gray round-tag">Precio: <span class="text-blue bold f-10" id="lblPrice"></span></p>
+          <p class="text-gray round-tag">Total calificaciones: <span id="lbltotRating" class="text-blue bold f-10"></span></p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btn-close" class="btn btn-orange" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="~/Content/sicv1/js/Coupon/keepReadingModal.js"></script>

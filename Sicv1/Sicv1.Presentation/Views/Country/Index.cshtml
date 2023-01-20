@@ -1,0 +1,76 @@
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
+@{
+    ViewBag.Title = "Ciudades";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section contentTitle{
+    <section class="bg-title top-fixed-action">
+        <p class="title-page">Ciudades</p>
+        <input type="button" id="btn-add-country" class="btn btn-orange" value="Agregar Ciudad" />
+    </section>
+    <div class="space-top-fixed-action"></div>
+
+ 
+}
+
+@section contentBody{
+    
+    <div id="div-tabla" class="bg-table">
+        <section class="scroll-md w100">
+            <table id="tbl-country" class="box-table" style="width: 100%;">
+                <thead class="thead">
+                    <tr class="row-box">
+                         <th class="title">Id</th>
+                         <th class="title">Ciudad</th>
+                         <th class="title">Portada</th>
+                         <th class="title">Estado</th>
+                         <th class="title"></th>
+                    </tr>
+                </thead>
+                <tbody id="tbody-country"></tbody>
+            </table>
+        </section>
+    </div>
+
+    <div class='customModal' id='modalAddCountry' role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class='modal-content'>
+                <input type="hidden" id="idCountry">
+                <div class='modal-header'>
+                    <h5 id="modal-title" class='modal-title'>Agregar Ciudad</h5>
+                    <button type='button' id='btn-x' class='close' data-dismiss='modal' aria-label='Close'>
+                        <span aria-hidden='true'>&times;</span>
+                    </button>
+                </div>
+                <div class='modal-body'>
+                    <div class="container">
+                        <div class="row">
+                            <span class="ant-form-group">Nombre de la ciudad</span>
+                            <input name="NAME_COUNTRY" class="input" type="text" id="txtCountry">
+                            
+                        </div>
+                        <div class="row">
+                            <span class="ant-form-group">URL imagen de portada</span>
+                            <input name="IMAGE_FIRST" class="input" type="text" id="txtImgFirst">
+                            
+                        </div>
+
+                        <div class="row">
+                            <label>Preview:</label>
+                            <img id="preview" src="" alt="" class="img-thumbnail" style="max-width:100%;">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btn-close-Add" class="btn btn-pink">Cerrar</button>
+                    <button type="button" id="btn-save-add" class="btn btn-blue">Grabar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+    <script defer src="~/Content/sicv1/js/Country/list.js"></script> 
+}

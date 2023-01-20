@@ -1,0 +1,81 @@
+﻿<div class="customModal" id="mdl-add-company">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Agregar</h5>
+				<button type="button" id="btn-x" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>				
+			</div>
+			<div class="modal-body">
+				@Html.AntiForgeryToken()
+				<input type="hidden" id="hdimgBase64AddCompany" />
+
+				<div class="ant-form-group">
+					<span>Nombre de alianza:</span>
+					<input class="input" type="text" id="txtNombreAddCompany" />
+				</div>
+				<div class="ant-form-group">
+					<span>¿Participa LifeMiles? </span>
+					<br />
+					<span>No</span>
+					<input type="radio" class="text-center" value="0" checked data-value="0" name="optParticipateLifeMiles" id="chkNoParticipateLifesMiles">
+					&nbsp;<span>Si</span>
+					<input type="radio" class="text-center" value="1" data-value="1" name="optParticipateLifeMiles" id="chkSiParticipateLifesMiles">
+				</div>
+				<br />
+				<div class='box-image h200p margin-b'>
+					<label class='absolute margin btn btn-upload' for='iflogoAddCompany'>
+						Seleccione imagen
+					</label>
+					<img class='image contain' src='#' id='objImgAddCompany' />
+				</div>
+				<input class='hidden' type='file' id='iflogoAddCompany' accept='image/jpeg, image/png' />
+				<div class='row'>
+					<div class='ant-form-group col-6'>
+						<span>Ruc:</span>
+						<input class='input' type='text' id='txtRucAddCompany' maxlength='11' />
+					</div>
+					<div class='ant-form-group col-6'>
+						<span>Teléfono:</span>
+						<input type='text' class='input' id='txtTelefAddCompany' maxlength='9' />
+					</div>
+				</div>
+				<div class='ant-form-group'>
+					<span>Url de fan page de facebook:</span>
+					<input class='input' type='text' id='txtUrlRedSocialAddCompany' />
+				</div>
+				<div class="row">
+					<div class='ant-form-group col-6'>
+						<span>latitud:</span>
+						<input class='input' type='text' id='txtLatitude' />
+					</div>
+					<div class='ant-form-group col-6'>
+						<span>Longitud:</span>
+						<input class='input' type='text' id='txtLongitude' />
+					</div>
+					<div class='ant-form-group col-12'>
+						<span>Ciudad:</span>
+						<select class="input" id="cboCountry">												 
+							<option value="0" disabled="" selected="">[Seleccione Ciudad]</option>						
+						</select>						
+					</div>
+					<div class='ant-form-group col-12'>
+						<span>Dirección:</span>
+						<input class='input' type='text' id='txtDirection' />
+					</div>
+				</div>
+				<div id="divAlertAddCompany" class="ant-message"></div>
+			</div>
+			<div class="modal-footer">				
+				<button type="button" id="btn-close" class="btn btn-pink" data-dismiss="modal">Cerrar</button>
+				<button type="button" id="btnGrabar" class="btn btn-blue">Grabar</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+

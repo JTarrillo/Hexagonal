@@ -1,0 +1,131 @@
+﻿
+@{
+    ViewBag.Title = "Upload";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section contentTitle{
+    <div class="bg-title top-fixed-action">
+        <p class="title-page">Carga de códigos cineplanet</p>
+
+        <div class="center-v">
+
+            <span class="center margin-r" title="Fecha inicial">
+                <input type="file" name="myfile" id="myfile" class="file" />
+            </span>
+
+            <button id="al-download" class="btn btn-blue active" title="Previsualizar el excel cargado" onclick="preview();">Previsualizar</button>&nbsp;&nbsp;
+            <button id="al-download-lm" class="btn btn-orange active" title="Registrar códigos" onclick="insert();">Registrar</button>
+        </div>
+    </div>
+}
+@section contentBody {
+    <spa><strong>NOTA:</strong> Cuando se suba un lote nuevo, la carga anterior quedará deshabilitada.</spa>
+    <br />
+    <div id="div-tabla" class="bg-table">
+        <section class="w100 space-between margin-b wrap">
+            <section class="scroll-md w100">
+                <table class="list-codes box-table"></table>
+            </section>
+        </section>
+    </div>
+    <script>
+        $(function() {
+             $("#al-download-lm").hide();
+        });
+        function insert() {
+            fncreatefeedbackToUser("Procesando códigos");
+           
+             $("#loading").addClass("flex");
+            let table = document.querySelector('.list-codes');
+            let cells = document.querySelectorAll('.list-codes tr > td');
+            let upload = { CODES: [] };
+            for (const c of cells) {
+                upload.CODES.push({ CODE: c.textContent });
+            }
+            let xhr = new XMLHttpRequest();
+            xhr.responseType = "json";
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState == XMLHttpRequest.DONE) {
+                    if (xhr.status == 200) {
+                        let res = xhr.response;
+                        if (res.STATUS) {
+                             $("#loading").removeClass("flex");
+                            let render = '<tr><th>CÓDIGO</th><th>ESTADO</th><th>MENSAJE</th></tr>';
+                            for (const c of res.CODES) {
+                                render += `<tr><td>${c.CODE}</td><td>${c.STATUS}</td><td>${c.MESSAGE}</td></tr>`;
+                            }
+                            table.innerHTML = render;
+                            $("#al-download-lm").hide();
+                        }
+                        else {
+                             $("#loading").removeClass("flex");
+                            console.log(res);
+                            alert(res.message);
+                        }
+                    }
+                    else {
+                         $("#loading").removeClass("flex");
+                        alert("http Preview responde con status " + xhr.status);
+                    }
+                }
+            };
+            xhr.open("POST", "/Upload/Insert");
+            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xhr.send(JSON.stringify(upload));
+        }
+        function preview() {
+            let table = document.querySelector('.list-codes');
+            table.innerHTML = '';
+            let input = document.getElementById("myfile");
+            if (input.files.length == 0) {
+                $("#al-download-lm").hide();
+                alert("debe seleccionar un archivo");
+                return;
+            }
+            let file = input.files[0];
+            if (!/\.(xls|xlsx)$/i.test(file.name)) {
+                $("#al-download-lm").hide();
+                alert("El archivo debe tener extensión xls o xlsx");
+                return;
+            }
+            if (file.size > 1024 * 1024 * 2) {
+                $("#al-download-lm").hide();
+                alert("El archivo debe pesar menos de 2 MB.");
+                return;
+            }
+            let formData = new FormData();
+            formData.append("myFile", file);
+
+            let xhr = new XMLHttpRequest();
+            xhr.responseType = "json";
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState == XMLHttpRequest.DONE) {
+                    if (xhr.status == 200) {
+                        let res = xhr.response;
+                        if (res.status) {
+
+                            let render = '';
+                            for (const c of res.data) {
+                                render += `<tr><td>${c}</td></tr>`;
+                            }
+                            table.innerHTML = render;
+                            $("#al-download-lm").show();
+                        }
+                        else {
+                            console.log(res);
+                            alert(res.message);
+                        }
+                    }
+                    else {
+                        alert("http Preview responde con status " + xhr.status);
+                        $("#al-download-lm").hide();
+                    }
+                }
+            };
+            xhr.open("POST", "/Upload/Preview");
+            xhr.send(formData);
+        }
+
+    </script>
+}

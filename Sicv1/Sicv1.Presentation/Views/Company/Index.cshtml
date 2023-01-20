@@ -1,0 +1,115 @@
+﻿<link href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/buttons/2.1.0/css/buttons.dataTables.min.css" rel="stylesheet" />
+@{
+    ViewBag.Title = "Empresas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section contentTitle
+{
+<section class="title-custom-page">
+    <div class="row ml-1">
+        <div>
+            <p class="text-header-sic">Empresas</p>
+        </div>
+        <div class="ml-auto mr-3">
+            <button id="btn-modal-user" class="btn btn-primary">Agregar Empresa</button>
+        </div>
+    </div>
+</section>
+}
+
+@section contentBody
+{
+<div id="div-tabla" class="bg-table shadow">
+    <section class="w100 space-between margin-b wrap">
+
+        @* <div>
+            Rol&nbsp;
+            <select id="cboRoleFilter" class="select"></select>
+        </div> *@
+
+        <div class="center-v w100xs xs-margin-t">
+            <div class="box-search">
+                <input type="text" id="search" class="search-child" placeholder="Busqueda" autocomplete="off" />
+                <div class="box-icon" id="">
+                    <i class="fas fa-search icon"></i>
+                </div>
+            </div>
+            <div class="i-btn-circle margin-l i-delete" id="btn-cancelar-busq">
+                <i class="fas fa-times icon"></i>
+                <span class="">Cancelar</span>
+            </div>            
+        </div>
+        <div class="center-v w100xs xs-margin-t">
+            <button id="ExportReporttoExcel" class="btn btn-primary"><i class="far fa-file-excel"></i> Exportar</button> 
+        </div>
+    </section>
+    <section class="scroll-md w100">
+        <small class="sic-text-small">
+            Ultima consulta : <span id="timeServer"></span>
+        </small>
+        <table id="tbl-users" class="box-table">
+            <thead class="thead">
+                <tr class="row-box text-center">
+                    <th class="title">ID</th>
+                    <th class="title">NOMBRE</th>
+                    <th class="title">RUC</th>
+                    <th class="title">ESTADO</th>
+                    <th class="title"></th>
+                </tr>
+            </thead>
+            <tbody id="tbody-users"></tbody>
+        </table>
+    </section>
+</div>
+<div class='modal fade' id='modal' role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class='modal-content'>          
+            <input type="hidden" id="idCompany">
+            <div class='modal-header'>
+                <h5 id="modal-title" class='modal-title'>Agregar Usuario</h5>
+            </div>
+            <div class='modal-body'> 
+                <div class="row">   
+                    <div class="col-6 ant-form-group">
+                        <span>RUC</span>
+                        <input class="input" type="text" autocomplete="none" maxlength="11" placeholder="Numero de RUC"
+                            id="txtRuc" onkeypress="fnvalidateOnlyNumbers(this)">
+                    </div>                 
+                    <div class="col-6 ant-form-group">
+                        <span>Estado</span>
+                        <select id="cboEstado" class="input" autocomplete="none">
+                            <option value="1">Activo</option>
+                            <option value="0">Inactivo</option>
+                        </select>
+                    </div>                    
+                </div>
+                <div class="row">
+                    <div class="col-12 ant-form-group">
+                        <span>Nombre</span>
+                        <input class="input" type="text" autocomplete="none" placeholder="Nombres" id="txtName"
+                            required="true">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-pink">Cerrar</button>
+                <button type="button" id="btn-save-add" class="btn btn-blue">Grabar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" charset="utf8"
+    src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.1.0/js/dataTables.buttons.min.js"></script>
+
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.html5.min.js"></script>
+
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.print.min.js"></script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+
+<script src="~/Content/sicv1/js/validateControls.js"></script>
+<script src="~/Content/sicv1/js/Company/controller.js"></script>
+}

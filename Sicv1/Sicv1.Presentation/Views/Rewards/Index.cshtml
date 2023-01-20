@@ -1,0 +1,501 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section contentTitle{
+    <div class="bg-title">
+        <p class="title-page">Módulos premiados</p>
+
+        <div class="io-row center">
+            @if (Session["user"] != null)
+            {
+                User user = (User)Session["user"];
+                if (@user.FK_ROLE != 3)
+                {
+                    @*<div class="io-btn" onclick="openNotify()">
+                            <i class="animated ring fas fa-bell"></i>
+                            Notificar
+                        </div>*@
+                    <div class="io-divider vertical"></div>
+                    <div class="btn btn-green" onclick="openDrawer()">
+                        <i class="fas fa-newspaper"></i>  Nueva carga
+                    </div>
+                    <div class="io-divider vertical"></div>
+                    <a class="btn btn-orange" id="btnExportRewards">
+                        <i class="fas fa-file-excel"></i>  Exportar datos
+                    </a>
+                    @*<button id="al-export-lm" class="btn btn-green active" title="Exportar datos" onclick="exportRows()">Exportar datos</button>*@
+                }
+            }
+        </div>
+    </div>
+}
+
+@section contentBody{
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="~/Content/excel/dist/cpexcel.js"></script>
+    <script src="~/Content/excel/shim.js"></script>
+    <script src="~/Content/excel/jszip.js"></script>
+    <script src="~/Content/excel/xlsx.js"></script>
+    <script src="~/Content/excel/export.js"></script>
+
+    <div class="box-search">
+        <input type="text" class="search-child" id="searchReward" onkeyup="FilterInput(event,this)" placeholder="Nro. de documento">
+        <div class="box-icon" onclick="listPersonRewards()">
+            <i class="fas fa-search icon"></i>
+        </div>
+    </div>
+    <div class="io-divider horizontal"></div>
+    <div class="io-card">
+        <section class="w100">
+            <table class="box-table" style="margin: 0">
+                <thead class="thead">
+                    <tr class="row-box">
+                        <th class="title">ID</th>
+                        <th class="title">DNI</th>
+                        <th class="title">NOMBRE Y APELLIDOS</th>
+                        <th class="title">CARGA</th>
+                        <th class="title">F. CREACIÓN</th>
+                        @if (Session["user"] != null)
+                        {
+                            User user = (User)Session["user"];
+                            if (@user.FK_ROLE != 3)
+                            {
+                                <th class="title">ALIANZAS</th>
+                            }
+                            else
+                            {
+                                <th class="title">ESTADO</th>
+                                <th class="title">F. CANJE</th>
+                                <th class="title">ACCIONES</th>
+                            }
+                        }
+                    </tr>
+                </thead>
+                <tbody id="contenPersonRewards"></tbody>
+            </table>
+        </section>
+    </div>
+
+    <article id="drawerUploadRewards" class="io-drawer">
+        <div class="io-drawer-mask" onclick="this.parentNode.classList.remove('open');"></div>
+        <div class="io-drawer-content-wrapper" style="width: 400px">
+            <div class="io-drawer-content">
+                <div class="io-drawer-wrapper-body">
+                    <div class="io-drawer-header">
+                        <div class="io-drawer-title">Cargar excel</div>
+                    </div>
+                    <div class="io-drawer-body">
+                        <input type="file" name="myRewards" id="myRewards" class="file" style="font-size: .8rem" accept=".xlsx, .xls" onchange="importExcel(this)" />
+                        <div class="io-divider horizontal"></div>
+                        <div class="io-row">
+                            <button id="al-download-lm" class="btn btn-orange active" title="Registrar códigos" onclick="savePersonRewards()">Registrar</button>
+
+                        </div>
+                        <div class="io-divider horizontal"></div>
+                        <div class="io-form-group">
+                            <span>Nombres de carga</span>
+                            <input type="text" placeholder="Nombre de la carga" id="nameCharge">
+                        </div>
+                        <article class="io-dropdown">
+                            <div class="io-select" onclick="this.parentNode.classList.toggle('open')">
+                                <i class="fas fa-building"></i>
+                                Lista de Alianzas
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="list-option" id="list-option"></div>
+                        </article>
+                        <div class="io-divider horizontal"></div>
+                        <div class="io-card">
+                            <section class="scroll-md w100">
+                                <table id="tbl-users" class="box-table" style="margin: 0">
+                                    <thead class="thead">
+                                        <tr class="row-box">
+                                            <th class="title">DOCUMENTO</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="contentRewards" class="contentRewards"></tbody>
+                                </table>
+                            </section>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+    <article id="drawerNotifyRewards" class="io-drawer">
+        <div class="io-drawer-mask" onclick="this.parentNode.classList.remove('open');"></div>
+        <div class="io-drawer-content-wrapper" style="width: 300px">
+            <div class="io-drawer-content">
+                <div class="io-drawer-wrapper-body">
+                    <div class="io-drawer-header">
+                        <div class="io-drawer-title">Cargar excel</div>
+                    </div>
+                    <div class="io-drawer-body">
+                        <div class="io-form-group">
+                            <span>Titulo de notificacion</span>
+                            <input type="text" placeholder="">
+                        </div>
+                        <div class="io-divider vertical"></div>
+                        <div class="io-form-group">
+                            <span>Cuerpo de mensaje</span>
+                            <textarea placeholder="message"></textarea>
+                        </div>
+                        <article class="io-dropdown">
+                            <div class="io-select" onclick="this.parentNode.classList.toggle('open')">
+                                <i class="fas fa-file-excel"></i>
+                                Seleccionar carga
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="list-option">
+                                <div class="io-option" onclick="selectOption(this);render()">
+                                    <span></span>
+                                    <input type="checkbox" />
+                                    <p>Carga excel 1</p>
+                                </div>
+                                <div class="io-option" onclick="selectOption(this);render()">
+                                    <span></span>
+                                    <input type="checkbox" />
+                                    <p>Carga excel 2</p>
+                                </div>
+                                <div class="io-option" onclick="selectOption(this);render()">
+                                    <span></span>
+                                    <input type="checkbox" />
+                                    <p>Carga excel 3</p>
+                                </div>
+                            </div>
+                        </article>
+                        <div class="io-divider horizontal"></div>
+                        <div id="renderRewardsNotify">
+
+                        </div>
+                        <div class="io-divider horizontal"></div>
+                        <div class="bottom-sticky">
+                            <button type="button" class="btn btn-danger" onclick="fncreateAlert('Notificacion enviada','success')">Enviar notificacion</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+    <script>
+        var companiesSelected = [];
+        var personRewards = [];
+        var personRewardsClone = [];
+        var infoTemportal = [];
+        window.onload = function () {
+            listCompanies();
+            listPersonRewards();
+
+
+
+        };
+        $(function () {
+            $("#btnExportRewards").on("click", function () {
+                console.log("dadsasd");
+                $(this).attr("href", "../rewards/export?nameFile=premiados");
+                fncreatefeedbackToUser("generando archivo excel...");
+                //$("#loading").addClass("flex");
+                //setTimeout(function () {
+                //    $("#loading").removeClass("flex");
+
+                //    $("#min_date_users").val("");
+                //    $("#max_date_users").val("");
+
+                //}, 1000);
+
+            });
+        });
+
+        function FilterInput(event, elem) {
+            if (elem.value === '') {
+                personRewards = personRewardsClone;
+            } else {
+                personRewards = personRewardsClone.filter(item => item.DOCUMENT.toLowerCase().includes(elem.value.toLowerCase()));
+            }
+            renderRowsRewards(personRewards);
+        }
+
+        function renderRowsRewards(array) {
+            var itemsSelect = "";
+            let controlItems = document.getElementById('contenPersonRewards');
+            controlItems.innerHTML = "";
+            array.forEach(function (item, index) {
+                var status = item.USED ? 'CANJEADO' : "PENDIENTE";
+                var companies = "";
+                if (item.COMPANIES !== null) {
+                    item.COMPANIES.forEach(function (part, index2) {
+                        var statusUsed = part.USED ? "green" : "";
+                        companies += `<div title="` + part.CREATED_AT + `" tooltip="` + part.CREATED_AT + `" class="io-tag ` + statusUsed + `">` + part.NAME.charAt(0).toUpperCase() + part.NAME.slice(1) + `</div><div class="io-divider vertical"></div>`
+                    });
+                    var nameClass = item.USED ? 'green' : "";
+                    var buttonConfirm = item.USED ? '' : `
+                                <div class="io-popconfirm">
+                                    <div class="io-mask" onclick="removeTooltip()"></div>
+                                    <div class="io-btn btn-blue small" onclick="openTooltip(this)">Confirmar</div>
+                                    <div class="io-popover">
+                                        <div class="io-popover-message">
+                                            <svg style="margin-right: .4rem" viewBox="64 64 896 896"  width="1em" height="1em" fill="var(--Yellow)">
+                                                <path d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm-32 232c0-4.4 3.6-8 8-8h48c4.4 0 8 3.6 8 8v272c0 4.4-3.6 8-8 8h-48c-4.4 0-8-3.6-8-8V296zm32 440a48.01 48.01 0 010-96 48.01 48.01 0 010 96z"></path>
+                                            </svg>
+                                            <div class="io-popover-message-title">¿Está seguro?</div>
+                                        </div>
+                                        <div class="io-popover-buttons">
+                                            <button type="button" class="io-btn gosth small" style="margin-right: .4rem" onclick="removeTooltip()">No</button>
+                                            <button type="button" class="io-btn gosth small blue" onclick="savePersonConfirm(`+ item.ID + `)">Si</button>
+                                        </div>
+                                    </div>
+                                </div>`;
+                    var namecompleted = item.NAME + " " + item.LASTNAME_P + " " + item.LASTNAME_M;
+
+                    itemsSelect += `<tr class="all-row">
+                                                        <td class="cell primary">`+ item.ID + `</td>
+                                                        <td class="cell primary">`+ item.DOCUMENT + `</td>
+                                                        <td class="cell">`+ namecompleted + `</td>
+                                                        <td class="cell">`+ item.NAME_CHARGE + `</td>
+                                                        <td class="cell">`+ item.CREATED_AT + `</td>
+                                                        @if (Session["user"] != null)
+                                                        {
+                                                            User user = (User)Session["user"];
+                                                            if (@user.FK_ROLE != 3)
+                                                            {
+                                                                 <td class="cell io-row">` + companies + `</td>
+                                                            }
+                                                            else {
+                                                                <td class="cell">` + status + `</td>
+                                                                <td class="cell">` + item.USED_CREATED_AT + `</td>
+                                                                <td class="cell">` + buttonConfirm + `</td>
+                                                            }
+                                                        }
+
+
+
+                                                    </tr>`
+
+                }
+
+            });
+
+            controlItems.innerHTML += itemsSelect;
+        }
+
+        function exportRows() {
+            console.log("ok");
+             $(this).attr("href", "../rewards/export/premiados");
+        }
+
+        function convertToCSV(objArray) {
+             const array = typeof objArray != "object" ? JSON.parse(objArray) : objArray;
+             let str = "";
+
+            for (let i = 0; i < array.length; i++) {
+              let line = "";
+              for (let index in array[i]) {
+               if (line != "") line += ",";
+
+            line += array[i][index];
+              }
+
+            str += line + "\r\n";
+             }
+
+            return str;
+        }
+
+        function exportCSVFile(headers, items, fileName) {
+             if (headers) {
+              items.unshift(headers);
+             }
+
+            const jsonObject = JSON.stringify(items);
+
+            const csv = convertToCSV(jsonObject);
+
+            const exportName = fileName + ".csv" || "export.csv";
+
+            const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+             if (navigator.msSaveBlob) {
+              navigator.msSaveBlob(blob, exportName);
+             } else {
+              const link = document.createElement("a");
+              if (link.download !== undefined) {
+               const url = URL.createObjectURL(blob);
+               link.setAttribute("href", url);
+               link.setAttribute("download", exportName);
+               link.style.visibility = "hidden";
+               document.body.appendChild(link);
+               link.click();
+               document.body.removeChild(link);
+              }
+             }
+        }
+
+        function listCompanies() {
+            companiesSelected = [];
+            axios.post('/Company/list', {}).then(function (response) {
+                var itemsSelect = "";
+                response.data.forEach(function (item, index) {
+                    itemsSelect += `<div class="io-option" onclick="selectOption(this,` + item.ID + ` )"><span></span>
+                                                                                        <input type="checkbox" />
+                                                                                        <p>`+ item.NAME + `</p>
+                                                                                    </div>`
+                });
+                let controlItems = document.getElementById('list-option');
+                controlItems.innerHTML += itemsSelect;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
+
+        function listPersonRewards() {
+            fncreatefeedbackToUser("Cargando");
+            var documentElement = document.getElementById("searchReward");
+            axios.post('/Rewards/list', { "DOCUMENT": documentElement.value }).then(function (response) {
+                personRewards = response.data;
+                personRewardsClone = response.data;
+                renderRowsRewards(response.data)
+                $("#loading").removeClass("flex");
+            }).catch(function (error) {
+                fncreateAlert(error, 'danger')
+            });
+        }
+
+        function savePersonRewards() {
+            let formtoSend = {
+                "DOCUMENTS": JSON.stringify(infoTemportal),
+                "COMPANIES": JSON.stringify(companiesSelected),
+                "NAME_CHARGE": document.getElementById("nameCharge").value
+            };
+            console.log(formtoSend);
+            axios.post('/Rewards/save', formtoSend).then(function (response) {
+                fncreateAlert("Registrado correctamente", 'success')
+            }).catch(function (error) {
+                fncreateAlert(error, 'danger')
+            });
+        }
+
+        function savePersonConfirm(id) {
+            let formtoSend = { "ID": id };
+            console.log(formtoSend);
+            axios.post('/Rewards/confirm', formtoSend).then(function (response) {
+                console.log(response)
+                fncreateAlert("Premio reclamado correctamente", 'success')
+                listPersonRewards()
+            }).catch(function (error) {
+                fncreateAlert(error, 'danger')
+            });
+        }
+
+        function openDrawer() {
+            let tag = document.querySelector('#drawerUploadRewards');
+            tag.classList.add('open');
+        }
+
+        function openNotify() {
+            let tag = document.querySelector('#drawerNotifyRewards');
+            tag.classList.add('open');
+        }
+
+
+        function selectOption(elem, id) {
+            let input = elem.querySelector('input');
+            if (input.checked === false) {
+                elem.classList.add('active');
+                input.checked = true
+                companiesSelected.push(id)
+            } else {
+                elem.classList.remove('active');
+                input.checked = false
+                companiesSelected = companiesSelected.filter(function (value, index, arr) { return value !== id; });
+            }
+        }
+
+        function importExcel(event) {
+
+            var fileSelected = event.files.length > 0 && event.files[0];
+            var sFileExtension = fileSelected.name.split('.')[fileSelected.name.split('.').length - 1].toLowerCase();
+
+            const fileReader = new FileReader();
+
+            fileReader.onload = event => {
+                try {
+                    infoTemportal = [];
+                    const result = new Uint8Array(event.target.result);
+                    const workbook = XLSX.read(result, { type: "array" });
+                    for (const Sheet in workbook.Sheets) {
+                        XLSX.utils.sheet_to_row_object_array(workbook.Sheets["Hoja1"]);
+                        if (workbook.Sheets.hasOwnProperty(Sheet)) {
+                            infoTemportal = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[Sheet]);
+                        }
+                    }
+                    var htmladd = "";
+                    infoTemportal.forEach(function (item, index) {
+                        htmladd += `<tr class="all-row"><td class="cell primary">` + item.DOCUMENTO + `</td></tr>`;
+                    });
+                    let controlBody = document.getElementById('contentRewards');
+                    controlBody.innerHTML += htmladd;
+                    fncreateAlert("Archivo cargado correctamente", 'success')
+                } catch (ex) {
+                    console.log(ex)
+                }
+            };
+            fileReader.readAsArrayBuffer(fileSelected);
+        }
+
+        function render() {
+            let content = document.getElementById('renderRewardsNotify');
+            let template = '';
+            //content.innerHTML = '';
+            template += `<div class="io-divider horizontal"></div>
+                                        <div class="io-card">
+                                        <section class="scroll-md w100">
+                                            <table class="box-table" style="margin: 0" >
+                                                <thead class="thead">
+                                                    <tr class="row-box">
+                                                        <th class="title">Id</th>
+                                                        <th class="title">Nombres</th>
+                                                        <th class="title">Ap.Paterno</th>
+                                                        <th class="title">Ap.Paterno</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr class="all-row">
+                                                        <td class="cell primary">1</td>
+                                                        <td class="cell">OSCAR  </td>
+                                                        <td class="cell">MERINO</td>
+                                                        <td class="cell">MERINO</td>
+                                                    </tr>
+                                                    <tr class="all-row">
+                                                        <td class="cell primary">1</td>
+                                                        <td class="cell">OSCAR  </td>
+                                                        <td class="cell">MERINO</td>
+                                                        <td class="cell">MERINO</td>
+                                                    </tr>
+                                                </tbody>
+                                                </table>
+                                            </section></div>`
+            content.innerHTML += template;
+        }
+
+        function removeTooltip() {
+            let tooltip = document.querySelectorAll('.io-popconfirm');
+            for (const item of tooltip) {
+                item.classList.remove('open')
+            }
+        }
+
+        function openTooltip(e) {
+            removeTooltip();
+            e.parentNode.classList.add('open')
+        }
+
+        function successReward() {
+            fncreateAlert('Premio reclamado', 'success')
+            setTimeout(removeTooltip, 400)
+        }
+    </script>
+}

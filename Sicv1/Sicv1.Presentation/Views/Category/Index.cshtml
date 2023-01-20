@@ -1,0 +1,87 @@
+﻿@{
+    ViewBag.Title = "Cupones";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section contentTitle{
+    <section class="bg-title top-fixed-action">
+        <p class="title-page">Cupones</p>
+        <input type="button" id="btn-add-coupon" class="btn btn-orange" value="Agregar cupón" />
+    </section>
+    <div class="space-top-fixed-action"></div>
+
+    <article class="top-content-coupon">
+        <div class="center-v wrap">
+            <select class="select" id="cbo-alianzas"></select>
+            <div class="content-logo">
+                <img class="logo-coupon" src="" id="objImgAlianza">
+            </div>
+        </div>
+
+        <div class="center-v w100xs">
+            <div class="box-search">
+                <input type="text" id="txtCouponSearch" placeholder="Buscar cupón" value="" class="search-child" />
+                <div class="box-icon" id="btnCouponSearch">
+                    <svg class="icon" width="20" height="21" viewBox="0 0 22.207 23.207">
+                        <circle cx="9" cy="9" r="8" fill="none" stroke='var(--graySoft)' stroke-width="2" transform="translate(0 0)" />
+                        <line id="Line_1" data-name="Line 1" x2="8" y2="8" transform="translate(13.8 14.5)" fill="none" stroke='var(--graySoft)' stroke-width="2" />
+                    </svg>
+                </div>
+            </div>
+            <div class="i-btn-circle margin-l i-delete" id="btnCouponSearchCancel">
+                <i class="fas fa-times icon"></i>
+                <span class="">Cancelar</span>
+            </div>
+        </div>
+    </article>
+}
+
+@section contentBody{
+
+    <div id='div-list' class='list-coupons'></div>
+    <script src="~/Content/sicv1/js/Coupon/list.js"></script>
+    @Html.Partial("Coupon/_partialKeepReadingModal")
+    <div id='div-edit' class='wrap center-h'></div>
+    @Html.Partial("Coupon/_partialEdit")
+    @Html.Partial("Coupon/_partialAdd")
+    <script src="~/Content/sicv1/js/Company/CompaniesByUserId.js"></script>
+    <script src="~/Content/sicv1/js/Coupon/onstateButton.js"></script>
+    <script src="~/Content/sicv1/js/Coupon/articles.js"></script>
+    <script src="~/Content/sicv1/js/datepicker.js"></script>
+    <script src="~/Content/sicv1/js/renderImage.js"></script>
+    <script src="~/Content/sicv1/js/getImageB64.js"></script>
+    <script src="~/Content/sicv1/js/formatDate.js"></script>
+    <script src="~/Content/sicv1/js/validateControls.js"></script>
+    <script src="~/Content/sicv1/js/togglePricePorcent.js"></script>
+    <script src="~/Content/sicv1/js/showHideInputSelect.js"></script>
+    <script src="~/Content/sicv1/js/InpuSelect.js"></script>
+    <script src="~/Content/sicv1/js/qrcode.min.js"></script>
+    <script src="~/Content/sicv1/js/Coupon/search.js"></script>
+    <script>
+        function fnDisabledBtnEditWhenIsAllianceUser(id) {
+			var IdBtnEditCoupon = "#btnEditCoupon" + id;
+			@{
+				User user = (User)Session["user"];
+			}
+            @if (user.FK_ROLE == 3)
+            {
+                <text>
+            setTimeout(function ()
+            {
+                $(IdBtnEditCoupon).addClass("hidden");
+            }, 100);
+                </text>
+            }
+            else
+            {
+                 <text>
+            setTimeout(function ()
+            {
+                $(IdBtnEditCoupon).removeClass("hidden");
+            }, 100);
+                </text>
+            }
+
+        }
+    </script>
+}

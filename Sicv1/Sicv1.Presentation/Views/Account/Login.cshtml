@@ -1,0 +1,107 @@
+﻿@model Sicv1.Presentation.Models.LoginViewModel
+<!DOCTYPE html>
+<html class="light">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="Oncosalud">
+    <meta name="author" content="Logixtal">
+    <title>SIC - Login</title>
+    <link rel="shortcut icon" type="image/icon" href="~/favicon.ico" />
+    <link href="~/Content/fontawesome/css/all.min.css" rel="stylesheet" />
+    <link href="~/Content/sicv1/css/fonts.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/ui/css/ui.css" rel="stylesheet" />
+    
+</head>
+<body class="bd-login">
+
+    <section class="login-body">
+        <div class="box-login mw ">
+            @* <img class="padding" style="transform: scale(.8);" src="~/Content/icon/oncobenefits.svg" alt="logo" /> *@
+            <article class="io-header-login">
+                Iniciar Session</br>
+                <h3>Cuenta</h3>
+                <small>Inicia session con tu cuenta para continuar</small>
+            </article>
+
+            @*@using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "login-open" }))
+            {
+                @Html.AntiForgeryToken()
+                if (!ViewData.ModelState.IsValid)*@
+                @*{*@
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        @*@Html.ValidationSummary(false)*@
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @*}*@
+                <article class="io-input-login">
+                    <div class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.75" stroke="#CCCCCC" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <circle cx="12" cy="7" r="4" />
+                            <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+                        </svg>
+                    </div>
+                    @*@Html.TextBoxFor(m => m.Username, new {@class = "js-user", placeholder = "Correo o numero de celular", onblur = "parentNode.classList.remove('active')", onfocus = "parentNode.classList.add('active')"})*@
+                </article>
+                
+                <article class="io-input-login">
+                    <div class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-lock" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.75" stroke="#CCCCCC" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <rect x="5" y="11" width="14" height="10" rx="2" />
+                            <circle cx="12" cy="16" r="1" />
+                            <path d="M8 11v-4a4 4 0 0 1 8 0v4" />
+                        </svg>
+                    </div>
+                    @*@Html.PasswordFor(m => m.Password, new { @class = "js-password", placeholder = "Contraseña", autocomplete = "off" ,  onblur = "parentNode.classList.remove('active')", onfocus = "parentNode.classList.add('active')" })*@
+                    @* <div class="icon see" onclick="see()"><i class="fas fa-eye" id="eye"></i></div> *@
+                </article>
+                <article class="io-forgot-password">
+                    Has olvidado tu contraseña?
+                </article>                
+                <input type="submit" onclick="fnEncryptClient();" class="btn-login" id="btn-signIn" value="Iniciar Sesi&oacute;n" />
+            @*}*@
+            @* <img style="transform: scale(.8);" src="~/Content/icon/oncosalud.svg" alt="oncosalud" /> *@
+        </div>
+    </section>
+
+    <script src="~/Content/sicv1/js/aes.js"></script>
+    <script src="~/Content/jQuery/jquery.min.js"></script>
+    <script src="~/Content/bootstrap/js/bootstrap.min.js"></script>
+    @*<script>
+
+        function fnEncryptClient() {
+            var key = CryptoJS.enc.Utf8.parse('8080808080808080');
+            var iv = CryptoJS.enc.Utf8.parse('8080808080808080');
+
+            if ($('#Password').val() != "") {
+                var encryptedpassword =
+                    CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse($('#Password').val()), key,
+                        { keySize: 128 / 8, iv: iv, mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7 });
+                $('#Password').val(encryptedpassword);
+            }
+        }
+
+        function see() {
+            if (Password.type === 'password') {
+                Password.type = 'text';
+            } else {
+                Password.type = 'password';
+            }
+            if (eye.className === 'fas fa-eye') {
+                eye.className = 'fas fa-eye-slash';
+            } else {
+                eye.className = 'fas fa-eye';
+            }
+        }
+
+
+    </script>*@
+
+</body>
+</html>

@@ -1,0 +1,215 @@
+﻿
+<style>
+    .table-bordered {
+        border: 0px solid #dee2e6 !important;
+    }
+    .cell-wrap-none{
+        white-space: normal !important;
+    }
+</style>
+@{
+ViewBag.Title = "Blogs";
+Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section contentTitle
+{
+<div class="bg-title top-fixed-action">
+    <p class="title-page">Blogs</p>
+    <input type="button" id="btn-add-blog" class="btn btn-orange" value="Agregar Blog" />
+</div>
+<div class="space-top-fixed-action"></div>
+}
+
+@section contentBody
+{
+
+<div id="div-tabla" class="bg-table">
+    <div class="scroll-md w100">
+        <table id="tbl-blogs" class="table box-table table-bordered" style="width: 100%;">
+            <thead class="thead">
+                <tr class="row-box">
+                    <th class="title">Id</th>
+                    <th class="title">Titulo</th>
+                    <th class="title">Tipo</th>
+                    <th class="title">Categoria</th>
+                    <th class="title">Tipo</th>
+                    <th class="title">Video</th>
+                    <th class="title">Imagen</th>                    
+                </tr>
+            </thead>
+            <tbody id="tbody-blogs"></tbody>
+        </table>
+    </div>
+</div>
+
+<div class='customModal' id='modalAddBlog' role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class='modal-content'>
+            <input type="hidden" id="idNewsness">
+            <div class='modal-header'>
+                <h5 id="modal-title" class='modal-title'>Agregar Blog</h5>
+                <button type='button' id='btn-x' class='close' data-dismiss='modal' aria-label='Close'>
+                    <span aria-hidden='true'>&times;</span>
+                </button>
+            </div>
+            <div class='modal-body'>
+                <div class="container">
+                    <div class="row">
+                        <div class="col p-0">
+                            <div class="ant-form-group">
+                                <span>Titulo</span> 
+                                <textarea name="TITLE" placeholder="Ingrese un título"
+                                 class="input text-area" id="txtTitle"></textarea>
+                            </div>
+                        </div>                        
+                    </div>
+                    <div class="row">
+                        <div class="col p-0">
+                            <div class="ant-form-group">
+                                <span>Descripción</span>
+                                <textarea name="DESCRIPTION" placeholder="Ingrese descripción"
+                                    class="input text-area h100p" id="txtDescription"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col p-0">
+                            <div class="ant-form-group">
+                                <span>Enlace:</span>
+                                <input name="URL" class="input" type="text" id="txtUrl">
+                            </div>
+                        </div>                        
+                    </div>
+                    <div class="row">
+                        <div class="col p-0">
+                            <div class="ant-form-group">
+                                <span>Tipo de Blog:</span>
+                                <select class="input" id="cboType">
+                                    <option value="0" disabled="" selected="">[Seleccione]</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col p-0">
+                            <div class="ant-form-group">
+                                <span>Categoria:</span>
+                                <select class="input" id="cboCategory">
+                                    <option value="0" disabled="" selected="">[Seleccione]</option>
+                                </select>
+                            </div>                            
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-6">
+                            <div class="ant-form-group">
+                                <span>¿Contiene Video?:</span>
+                                <div class="ant-form-group">
+                                    <div style="float:left" class="btn-toggle-status box-icon " id="btnChangeType"
+                                        onclick="onChangeVideo(this)">
+                                        <span class="cicle-toggle"></span>
+                                    </div>
+                                    <span style="float:left" id="spanText">NO</span>
+                                </div>
+                            </div>                            
+                        </div>
+                        <div class="col-6">
+                            <div class="ant-form-group">
+                                <span>¿Expira?:</span>
+                                <div class="ant-form-group">
+                                    <div style="float:left" class="btn-toggle-status box-icon " id="btnChangeExpire"
+                                        onclick="onChangeExpire(this)">
+                                        <span class="cicle-toggle"></span>
+                                    </div>
+                                    <span style="float:left" id="spanTextExpire">NO</span>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <label>Fecha de Publicación:</label>
+                            <input name="DATE_PUBLICATION" class="input" type="date" id="txtDatePublication">
+                        </div>
+                        <div id="col-expiration" class="col-12 col-md-6 d-none">
+                            <label>Fecha de Expiración:</label>
+                            <input name="DATE_EXPIRATION" class="input" type="date" id="txtDateExpiration">
+                        </div>
+                    </div>
+                    <div class="row box-coupon-edit">
+                        <div class="section-image filter-st">
+                            <div class="box-image">
+                                <article class="upload column">
+                                    <svg class="padding" width="98.5" height="80" viewBox="0 0 98.5 108.615">
+                                        <g data-name="Grupo 16" transform="translate(-703 -357.879)">
+                                            <g id="Grupo_15" data-name="Grupo 15" transform="translate(-8)">
+                                                <line id="Línea_6" data-name="Línea 6" y1="80"
+                                                    transform="translate(760 360)" fill="none" stroke="#fff"
+                                                    stroke-linecap="round" stroke-width="3" />
+                                                <line id="Línea_7" data-name="Línea 7" x1="22" y1="22"
+                                                    transform="translate(760 360)" fill="none" stroke="#fff"
+                                                    stroke-linecap="round" stroke-width="3" />
+                                                <line id="Línea_8" data-name="Línea 8" y1="22" x2="22"
+                                                    transform="translate(738 360)" fill="none" stroke="#fff"
+                                                    stroke-linecap="round" stroke-width="3" />
+                                            </g>
+                                            <path id="Trazado_32" data-name="Trazado 32"
+                                                d="M786.833,675.667V712s.795,13.454,12.68,13.667,69.338,0,69.338,0,13.482-1.333,13.482-13.667V676.5"
+                                                transform="translate(-82.333 -260.761)" fill="none" stroke="#fff"
+                                                stroke-linecap="round" stroke-width="3" />
+                                        </g>
+                                    </svg>
+
+                                    <span class="text-white">Seleccione imagen</span>
+                                </article>
+                                <img id="imgModalAdd" class="image" />
+                            </div>
+                            <label class="btn-selected-file absolute column" for="inputFileAdd">
+                                <svg class="padding" width="98.5" height="80" viewBox="0 0 98.5 108.615">
+                                    <g data-name="Grupo 16" transform="translate(-703 -357.879)">
+                                        <g id="Grupo_15" data-name="Grupo 15" transform="translate(-8)">
+                                            <line id="Línea_6" data-name="Línea 6" y1="80"
+                                                transform="translate(760 360)" fill="none" stroke="#fff"
+                                                stroke-linecap="round" stroke-width="3" />
+                                            <line id="Línea_7" data-name="Línea 7" x1="22" y1="22"
+                                                transform="translate(760 360)" fill="none" stroke="#fff"
+                                                stroke-linecap="round" stroke-width="3" />
+                                            <line id="Línea_8" data-name="Línea 8" y1="22" x2="22"
+                                                transform="translate(738 360)" fill="none" stroke="#fff"
+                                                stroke-linecap="round" stroke-width="3" />
+                                        </g>
+                                        <path id="Trazado_32" data-name="Trazado 32"
+                                            d="M786.833,675.667V712s.795,13.454,12.68,13.667,69.338,0,69.338,0,13.482-1.333,13.482-13.667V676.5"
+                                            transform="translate(-82.333 -260.761)" fill="none" stroke="#fff"
+                                            stroke-linecap="round" stroke-width="3" />
+                                    </g>
+                                </svg>
+
+                                <span class="text-white">Seleccione imagen</span>
+                            </label>
+
+                            <input class="hidden" type="file" id="inputFileAdd" name="inputFileAdd"
+                                onchange="fnRenderImage(this, '#imgModalAdd', '#hdimgBase64Add', null, 1000000);"
+                                accept="image/jpeg, image/png" /><br />
+                            <input class="hidden" type="hidden" id="hdimgBase64Add" name="hdimgBase64Add" value="" />
+                            <input class="hidden" type="hidden" id="hdFileNameAdd" name="hdFileNameAdd" value="" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btn-close-Add" class="btn btn-pink">Cerrar</button>
+                <button type="button" id="btn-save-add" class="btn btn-blue">Grabar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/Content/sicv1/js/renderImage.js"></script>
+<script src="~/Content/sicv1/js/getImageB64.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+<script defer src="~/Content/sicv1/js/Blog/BlogController.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+}

@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{61206529-2EA3-4F40-8963-F1486309559B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Sicv1.Domain</RootNamespace>
+    <AssemblyName>Sicv1.Domain</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Contracts\Repositories\IBaseRepository.cs" />
+    <Compile Include="Contracts\Repositories\ICategoryCardRepository.cs" />
+    <Compile Include="Contracts\Repositories\ICategoryCodeQrRepository.cs" />
+    <Compile Include="Contracts\Repositories\IConfigurationRepository.cs" />
+    <Compile Include="Contracts\Repositories\ICategoryRepository.cs" />
+    <Compile Include="Contracts\Repositories\ICompanyRepository.cs" />
+    <Compile Include="Contracts\Repositories\IBranchOfficesRepository.cs" />
+    <Compile Include="Contracts\Repositories\ICountryRepository.cs" />
+    <Compile Include="Contracts\Repositories\IDashboardRepository.cs" />
+    <Compile Include="Contracts\Repositories\INewsNessRepository.cs" />
+    <Compile Include="Contracts\Repositories\INewsNessTypeRepository.cs" />
+    <Compile Include="Contracts\Repositories\IRewardsRepository.cs" />
+    <Compile Include="Contracts\Repositories\INotifyRepository.cs" />
+    <Compile Include="Contracts\Repositories\IPopupConfigurationRepository.cs" />
+    <Compile Include="Contracts\Repositories\IRoleRepository.cs" />
+    <Compile Include="Contracts\Repositories\IScheduleRepository.cs" />
+    <Compile Include="Contracts\Repositories\IMenuRepository.cs" />
+    <Compile Include="Contracts\Repositories\IUbigeoRepository.cs" />
+    <Compile Include="Contracts\Repositories\IUploadsRepository.cs" />
+    <Compile Include="Contracts\Repositories\IParameterRepository.cs" />
+    <Compile Include="Contracts\Repositories\IUserRepository.cs" />
+    <Compile Include="Contracts\Services\ICategoryCardService.cs" />
+    <Compile Include="Contracts\Services\ICategoryCodeQrService.cs" />
+    <Compile Include="Contracts\Services\IConfigurationService.cs" />
+    <Compile Include="Contracts\Services\ICategoryService.cs" />
+    <Compile Include="Contracts\Services\ICompanyService.cs" />
+    <Compile Include="Contracts\Services\IDashboardService.cs" />
+    <Compile Include="Contracts\Services\IMenuService.cs" />
+    <Compile Include="Contracts\Services\INewsNessService.cs" />
+    <Compile Include="Contracts\Services\INewsNessTypeService.cs" />
+    <Compile Include="Contracts\Services\IRewardsService.cs" />
+    <Compile Include="Contracts\Services\INotifyService.cs" />
+    <Compile Include="Contracts\Services\IPopupConfigurationService.cs" />
+    <Compile Include="Contracts\Services\IRoleService.cs" />
+    <Compile Include="Contracts\Services\IScheduleService.cs" />
+    <Compile Include="Contracts\Services\IUbigeoService.cs" />
+    <Compile Include="Contracts\Services\IUploadService.cs" />
+    <Compile Include="Contracts\Services\IParameterService.cs" />
+    <Compile Include="Contracts\Services\IUserService.cs" />
+    <Compile Include="Contracts\Services\ICountryService.cs" />
+    <Compile Include="Entities\BaseClass.cs" />
+    <Compile Include="Entities\Blog.cs" />
+    <Compile Include="Entities\BranchOffices.cs" />
+    <Compile Include="Entities\CategoryCard.cs" />
+    <Compile Include="Entities\Code.cs" />
+    <Compile Include="Entities\Parameter.cs" />
+    <Compile Include="Entities\Configuration.cs" />
+    <Compile Include="Entities\Category.cs" />
+    <Compile Include="Entities\CategoryCodeQr.cs" />
+    <Compile Include="Entities\Company.cs" />
+    <Compile Include="Entities\Country.cs" />
+    <Compile Include="Entities\Dashboard.cs" />
+    <Compile Include="Entities\Menu.cs" />
+    <Compile Include="Entities\NewsNess.cs" />
+    <Compile Include="Entities\Notification.cs" />
+    <Compile Include="Entities\PopupConfiguration.cs" />
+    <Compile Include="Entities\Result.cs" />
+    <Compile Include="Entities\Role.cs" />
+    <Compile Include="Entities\Rewards.cs" />
+    <Compile Include="Entities\RoleMenu.cs" />
+    <Compile Include="Entities\Schedule.cs" />
+    <Compile Include="Entities\NewsNessType.cs" />
+    <Compile Include="Entities\Ubigeo.cs" />
+    <Compile Include="Entities\Upload.cs" />
+    <Compile Include="Entities\User.cs" />
+    <Compile Include="Entities\UserCompany.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\CategoryCardService.cs" />
+    <Compile Include="Services\CategoryCodeQrService.cs" />
+    <Compile Include="Services\ConfigurationService.cs" />
+    <Compile Include="Services\CategoryService.cs" />
+    <Compile Include="Services\CompanyService.cs" />
+    <Compile Include="Services\BranchOfficesService.cs" />
+    <Compile Include="Services\CountryService.cs" />
+    <Compile Include="Services\DashboardService.cs" />
+    <Compile Include="Contracts\Services\IBranchOfficesService.cs" />
+    <Compile Include="Services\MenuService.cs" />
+    <Compile Include="Services\NewsNessService.cs" />
+    <Compile Include="Services\NewsNessTypeService.cs" />
+    <Compile Include="Services\RewardsService.cs" />
+    <Compile Include="Services\NotifyService.cs" />
+    <Compile Include="Services\PopupConfigurationService.cs" />
+    <Compile Include="Services\RoleService.cs" />
+    <Compile Include="Services\ScheduleService.cs" />
+    <Compile Include="Services\UbigeoService.cs" />
+    <Compile Include="Services\UploadService.cs" />
+    <Compile Include="Services\ParameterService.cs" />
+    <Compile Include="Services\UserService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\.editorconfig">
+      <Link>.editorconfig</Link>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

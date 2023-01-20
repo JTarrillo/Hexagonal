@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html lang="es" class="light">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SIC - @ViewBag.Title</title>
+    <meta name="description" content="SIC">
+    <meta name="author" content="Logixtal">
+    <link rel="shortcut icon" type="image/icon" href="~/favicon.ico" />
+    <link href="https://fonts.googleapis.com/css?family=Varela+Round&display=swap" rel="stylesheet">
+    <link href="~/Content/fontawesome/css/all.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/ui/css/ui.css" rel="stylesheet" />
+    <link href="~/Content/sicv1/css/Sicv1.css" rel="stylesheet" />
+    
+</head>
+
+<body class="bd-status">
+    <script src="~/Content/jQuery/jquery.min.js"></script>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+
+    <script src="~/Content/sicv1/js/utils/connect.js"></script>
+    <script src="~/Content/sicv1/js/utils/cnx.js"></script>
+    <script src="~/Content/sicv1/js/utils/toastito.js"></script>
+    <script src="~/Content/sicv1/js/utils/util.js"></script>
+
+    
+    <script src="~/Content/bootstrap/js/bootstrap.min.js"></script>    
+    <script src="~/Content/sicv1/js/openAside.js"></script>
+    <script src="~/Content/sicv1/js/sidebar.js"></script>
+    <script src="~/Content/sicv1/js/alert.js"></script>
+    <script src="~/Content/sicv1/js/feedbackUser.js"></script>
+
+    @RenderBody()
+    <div id="main_div">
+        @Html.Partial("_Topbar")
+        <div class="bg-delay"></div>
+        <ul id="slide-out" class="sidenav menu">
+            <div id="asidemenu">
+
+            </div>
+            @*@Html.Action("LoadMenu", "Home")*@
+
+            @Html.Partial("_PanelLeftDown")
+        </ul>
+        <div class="desk-hidden bg-toogle" id="bg-toggle-movile"></div>
+
+        <section class='box-body' id='section-content'>
+            <section class="container" id="container11">
+                @RenderSection("contentTitle", false)
+                @RenderSection("contentBody", false)
+            </section>
+        </section>
+        <section>
+            <article class="loading" id="loading"></article>
+            <article class="ant-message" id="div-alert"></article>
+        </section>
+    </div>
+    <script src="~/Content/sicv1/js/themes.js"></script>
+    <script src="~/Content/ui/js/all.js"></script>
+    
+    <script>
+        $(function () {
+            $("#bg-toggle-movile").on("click", function () {
+                openAside();
+            });
+            $.ajax({
+                url: '/Home/LoadMenu',
+                method: 'POST',
+                success: (response) => {
+                    $('#asidemenu').html(response);
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

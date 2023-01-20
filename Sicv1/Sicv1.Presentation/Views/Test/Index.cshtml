@@ -1,0 +1,59 @@
+﻿
+@{
+	ViewBag.Title = "Index";
+	//Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<form>
+	@Html.AntiForgeryToken()
+	<input name="nombre" type="text" />
+	<input id="btn_registrar" type="button" value="Registrar" />
+</form>
+
+<div id="result">
+
+</div>
+
+<script>
+
+	let button = document.getElementById("btn_registrar");
+	
+	button.addEventListener("click", (event) => {
+
+		let data = new FormData();
+		data.append("nombre", button.parentNode.querySelector('input[name="nombre"]').value);
+		data.append("__RequestVerificationToken", button.parentNode.querySelector('input[name="__RequestVerificationToken"]').value);
+		console.log(data);
+
+		let xhr = new XMLHttpRequest();
+		xhr.responseType = "json";
+		xhr.onreadystatechange = () => {
+			if (xhr.readyState == XMLHttpRequest.DONE) {
+				if (xhr.status == 200) {
+					let res = xhr.response;
+					console.log(res);
+					//if (res.STATUS) {
+					//	alert('Mensaje enviado exitosamente');
+					//}
+					//else {
+					//	console.log(res);
+					//	alert(res.MESSAGE);
+					//}
+				}
+				else {
+					console.log(xhr);
+					alert("http Preview responde con status " + xhr.status);
+				}
+				//$("#loading").removeClass("flex");
+			}
+		};
+		xhr.open("POST", "/Test/MyAction");
+		//xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+		//xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
+		//xhr.send(JSON.stringify(data));
+		xhr.send(data);
+	});
+	
+</script>

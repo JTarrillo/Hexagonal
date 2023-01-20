@@ -1,0 +1,126 @@
+﻿@{
+  ViewBag.Title = "Validar cupón";
+  Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section contentTitle{
+  <div class="bg-title">
+    <p class="title-page">Validar cupón</p>
+  </div>
+}
+
+@section contentBody{
+    <div class="card-code" style="justify-content: flex-start">
+        <article class='io-row center'>
+            <article class="io-dropdown">
+                <div class="io-select" onclick="this.parentNode.classList.toggle('open')">
+                    <i class="fas fa-barcode"></i>
+                    <span>Tipo de codigo</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <input type="hidden" id="modeSearch" name="modeSearch" value="" />
+                <div class="list-option">
+                    <div class="io-option" onclick="selectOption(this); activeList(1)">
+                        <span></span>
+                        <input type="checkbox" />
+                        <p>Documento</p>
+                    </div>
+                    <div class="io-option" onclick="selectOption(this); activeList(0)">
+                        <span></span>
+                        <input type="checkbox" />
+                        <p>Codigo QR</p>
+                    </div>
+                </div>
+            </article>
+            <div class="io-divider vertical"></div>
+            <input type="text" class='input-code' id="txt-cod-toValidate" placeholder='Ingresar código' value="" style="margin-bottom: 0" />
+            <div class="io-divider vertical"></div>
+            <button class='btn btn-orange' id="btn-enviar-validarCupon">Validar</button>
+        </article>
+        <div class="io-divider horizontal"></div>
+
+        <div class="list-coupons" id="list-coupons">
+         
+        </div>
+        
+        <article class='bottom ' id="panel-validation">
+            <div class='panel-bg-close' onClick="fnopenPanel()" id="panel-bg-close"></div>
+            <div class='box-coupon'>
+                <div class="left" style="padding: 1rem 3rem">
+                    <div class='card-blur-lg'>
+                        <img class='blur-image' id="objImgCouponDet2" alt="bg-blur" />
+                        <div class='box-image'>
+                            <img class='image' id="objImgCouponDet" alt="image" />
+                        </div>
+                    </div>
+                </div>
+                <div class='right'>
+                    <div class='column' style="padding: 1rem 3rem">
+                        <p class="text-info bold" id="lblPriceCouponDet">
+                            @* <span>s/</span><span class="text-dark" id="lblPriceCouponDet"></span><span>% Dscto</span> *@
+                        </p>
+                        <input type="hidden" id="hdf_GetID_CATEGORIES_CODE_QR" value="" />
+                        <p class="text-info bold " id="lblTitleCouponDet"></p>
+                        <div class="padding-b margin-b" id="div-DetCouponValidate"></div>
+                        <p class="f-8 text-gray" id="lblDescriptionCouponDet"></p>
+                        <br />
+                        <p>Condiciones:</p>
+                        <br />
+                        <br />
+                        <p class="f-8 text-gray" id="lblConditionsCouponDet" style="padding-bottom: 3rem"></p>
+                    </div>
+                    <div class="fixed-b">
+                        <input class="btn btn-orange" id="btnconfirmValidaCupon" type="button" value="Confirmar" />
+                    </div>
+                </div>
+            </div>
+        </article>
+    </div>
+}
+<script>
+    function selectOption(elem, id, multi) {
+        let input = elem.querySelector('input');
+        let text_option = elem.querySelector('p');
+        let all = document.querySelectorAll('.io-option');
+        let select = elem.parentNode.parentNode;
+        let span = select.querySelector('.io-select span');
+        let value = '';
+        //multi select
+        if (multi == true) {
+            if (input.checked === false) {
+                elem.classList.add('active');
+                input.checked = true
+            } else {
+                elem.classList.remove('active');
+                input.checked = false
+            }
+        } else {
+            //only select
+            for (const item of all) {
+                item.classList.remove('active');
+                input.checked = false;
+            }
+            elem.classList.add('active');
+            input.checked = true;
+            value = text_option.textContent
+            $("#modeSearch").val(text_option.textContent)
+            span.textContent = value
+        }
+    }
+
+    function activeList(n) {
+        let content = document.querySelector('.list-coupons');
+        switch (n) {
+            case 0:
+                content.style = 'display: none'
+                break;
+            case 1:
+                content.style = 'display: grid'
+                break;
+
+        }
+    }
+</script>
+<script src="~/Content/sicv1/js/Coupon/validate.js"></script>
+<script src="~/Content/sicv1/js/CategoryCodeQr/save.js"></script>
+<script src="~/Content/sicv1/js/openPanel.js"></script>
